@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Register Pet</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+
+    <form class="mx-auto w-25 bg-blur rounded" th:method="POST"
+          th:action="@{/pet/add}"
+          th:object="${petRegisterBindingModel}">
+
+        <div class="form-group">
+            <div th:if="${hasPetRegistrationError}" class="text-danger">Pet Registration error has occurred!</div>
+
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="name" class="h4 mb-2">Pet Name</label>
+            </div>
+            <input type="text" class="form-control" id="name"  th:field="*{name}"
+                   th:errorclass="bg-danger"></input>
+            <small  th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}" class="text-danger">First name error message</small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="age" class="h4 mb-2">Pet age</label>
+            </div>
+            <input type="text" class="form-control" id="age" th:field="*{age}"
+                   th:errorclass="bg-danger"></input>
+            <small th:if="${#fields.hasErrors('age')}"
+                   th:errors="*{age}"  class="text-danger">Last name error message</small>
+        </div>
+
+        <div class="form-group">
+
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="petType" class="h4 mb-2">Pet type</label>
+            </div>
+            <select class="browser-default custom-select" id="petType" th:field="*{petType}"
+                    th:errorclass="bg-danger">
+                <option value="">Select type</option>
+                <option value="DOG">Dog</option>
+                <option value="CAT">Cat</option>
+                <option value="PARROT">Parrot</option>
+                <option value="REPTILIAN">Reptilian</option>
+                <option value="OTHER">Other</option>
+            </select>
+
+            <small th:if="${#fields.hasErrors('petType')}"
+                   th:errors="*{petType}" class="text-danger">Type error message</small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="ownerPhone" class="h4 mb-2">Pet's owner phone</label>
+            </div>
+            <input type="text" class="form-control" id="ownerPhone" th:field="*{ownerPhone}"
+                   th:errorclass="bg-danger"></input>
+            <small th:if="${#fields.hasErrors('ownerPhone')}"
+                   th:errors="*{ownerPhone}"  class="text-danger">Owner phone error message</small>
+        </div>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-warning  mb-3" value="Register">Register Vet</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

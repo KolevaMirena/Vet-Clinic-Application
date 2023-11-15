@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add manipulation</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+
+    <form class="mx-auto w-25 bg-blur rounded" th:method="POST"
+          th:action="@{/manipulation/add}"
+          th:object="${manipulationAddBindingModel}">
+
+        <div class="form-group">
+            <div th:if="${hasManipulationAddError}" class="text-danger">Add manipulation error has occurred!</div>
+
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="name" class="h4 mb-2">Manipulation Name</label>
+            </div>
+            <input type="text" class="form-control" id="name"  th:field="*{name}"
+                   th:errorclass="bg-danger"></input>
+            <small  th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}" class="text-danger">Manipulation name error message</small>
+        </div>
+
+
+
+        <div class="form-group">
+
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="type" class="h4 mb-2">Manipulation type</label>
+            </div>
+            <select class="browser-default custom-select" id="type" th:field="*{type}"
+                    th:errorclass="bg-danger">
+                <option value="">Select type</option>
+                <option value="MANDATORY">Mandatory</option>
+                <option value="OPTIONAL">Optional</option>
+
+            </select>
+
+            <small th:if="${#fields.hasErrors('type')}"
+                   th:errors="*{type}" class="text-danger">Manipulation type error message</small>
+        </div>
+
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="description" class="h4 mb-2">Manipulation description</label>
+            </div>
+            <textarea type="text" class="form-control" id="description" th:field="*{description}"
+                   th:errorclass="bg-danger"></textarea>
+            <small th:if="${#fields.hasErrors('description')}"
+                   th:errors="*{description}"  class="text-danger">Manipulation description error message</small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="price" class="h4 mb-2">Manipulation price</label>
+            </div>
+            <input type="text" class="form-control" id="price" th:field="*{price}"
+                   th:errorclass="bg-danger"></input>
+            <small th:if="${#fields.hasErrors('price')}"
+                   th:errors="*{price}"  class="text-danger">Manipulation price error message</small>
+        </div>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-warning  mb-3" value="Register">Add manipulation</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

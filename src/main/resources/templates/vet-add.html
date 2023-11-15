@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Register Vet</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+
+    <form class="mx-auto w-25 bg-blur rounded" th:method="POST"
+          th:action="@{/vet/add}"
+          th:object="${vetRegisterBindingModel}">
+
+        <div class="form-group">
+            <div th:if="${hasVetRegistrationError}" class="text-danger">Vet Registration error has occurred!</div>
+
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="firstName" class="h4 mb-2">First Name</label>
+            </div>
+            <input type="text" class="form-control" id="firstName"  th:field="*{firstName}"
+                   th:errorclass="bg-danger"></input>
+            <small  th:if="${#fields.hasErrors('firstName')}"
+                    th:errors="*{firstName}" class="text-danger">First name error message</small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="lastName" class="h4 mb-2">Last Name</label>
+            </div>
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
+                   th:errorclass="bg-danger"></input>
+            <small th:if="${#fields.hasErrors('lastName')}"
+                   th:errors="*{lastName}"  class="text-danger">Last name error message</small>
+        </div>
+
+        <div class="form-group">
+
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="vetSpecialtyEnum" class="h4 mb-2">Specialty</label>
+            </div>
+            <select class="browser-default custom-select" id="vetSpecialtyEnum" th:field="*{vetSpecialtyEnum}"
+                    th:errorclass="bg-danger">
+                <option value="">Select specialty</option>
+                <option value="COMPANION_ANIMAL_VET">Companion animal vet</option>
+                <option value="VETERINARY_SPECIALIST">Veterinary Specialist</option>
+                <option value="EXOTIC_ANIMAL_VET">Exotic animal vet</option>
+                <option value="LARGE_ANIMAL_VET">Large animal vet</option>
+                <option value="LABORATORY_VET">Laboratory vet</option>
+            </select>
+
+            <small th:if="${#fields.hasErrors('vetSpecialtyEnum')}"
+                   th:errors="*{vetSpecialtyEnum}" class="text-danger">Specialty error message</small>
+        </div>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-warning  mb-3" value="Register">Register Vet</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

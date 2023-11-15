@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vet Clinic App</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg bg-nav rounded">
+        <a class="nav-link my-text-color active h5" href="/">Vet Clinic App</a>
+        <div class="dropdown">
+            <button class="dropbtn nav-link my-text-color active h5">Choose operation</button>
+            <div class="dropdown-content">
+                <a class="nav-link my-text-color active h5 " th:href="@{/vet/add}">Register Vet</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/owner/add}">Register Owner</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/pet/add}">Register Pet</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/vet/assign}">Assign pet to a vet</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/manipulation/add}">Add Manipulation</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/product/add}">Add product</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/pet/execute}">Execute manipulation</a>
+                <a class="nav-link my-text-color active h5 " th:href="@{/product/sell}">Sell product</a>
+
+            </div>
+        </div>
+
+
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+            <ul class="navbar-nav row">
+                <li class="nav-item col-md-4">
+                    <a class="nav-link active h5 my-text-color" th:href="@{/login}">Login</a>
+                </li>
+
+                <li class="nav-item col-md-4">
+                    <a class="nav-link my-text-color active h5 " th:href="@{/register}">Register</a>
+                </li>
+
+                <li class="btn nav-item col-md-4">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button type="submit" class="btn-link nav-link my-text-color active h5 logout" >Logout</button>
+                    </form>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<footer class="footer bg-transparent  py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background h5 my-text-color fixed-bottom">
+            &copy; Vet Clinic App 2023. All rights reserved.
+        </div>
+    </div>
+</footer>
+</body>
+</html>

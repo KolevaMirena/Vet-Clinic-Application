@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div th:object="${allProductsOrderByType}" class="container bg-blur rounded mt-5 det">
+        <h1 class="dethead" th:unless="${allProductsOrderByType.size()==0}">Available products</h1>
+        <h1 class="dethead" th:if="${allProductsOrderByType.size()==0}">No Available products!</h1>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                    <tr th:unless="${allProductsOrderByType.size()==0}">
+                        <th>Product name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Available quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${allProductsOrderByType}">
+                        <th th:text="${product.name}"></th>
+                        <th th:text="${product.type}"></th>
+                        <th th:text="${product.price}"></th>
+                        <th th:text="${product.quantity}"></th>
+
+                    </tr>
+                    </tbody>
+                </table>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

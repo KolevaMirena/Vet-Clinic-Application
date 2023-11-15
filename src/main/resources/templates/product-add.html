@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add product</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+
+    <form class="mx-auto w-25 bg-blur rounded" th:method="POST"
+          th:action="@{/product/add}"
+          th:object="${productAddBindingModel}">
+
+        <div class="form-group">
+            <div th:if="${hasProductAddError}" class="text-danger">Add product error has occurred!</div>
+
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="name" class="h4 mb-2">Product Name</label>
+            </div>
+            <input type="text" class="form-control" id="name"  th:field="*{name}"
+                   th:errorclass="bg-danger"></input>
+            <small  th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}" class="text-danger">Product name error message</small>
+        </div>
+
+        <div class="form-group">
+
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="type" class="h4 mb-2">Product type</label>
+            </div>
+            <select class="browser-default custom-select" id="type" th:field="*{type}"
+                    th:errorclass="bg-danger">
+                <option value="">Select type</option>
+                <option value="FOOD">Food</option>
+                <option value="VITAMINS">Vitamins</option>
+                <option value="ANTIPARASITIC_CARE">Antiparasitic care</option>
+                <option value="VET_ACCESSORIES">Vet Accessories</option>
+                <option value="MEDICINES">Medicine</option>
+            </select>
+
+            <small th:if="${#fields.hasErrors('type')}"
+                   th:errors="*{type}" class="text-danger">Product type error message</small>
+        </div>
+
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="price" class="h4 mb-2">Product price</label>
+            </div>
+            <input type="text" class="form-control" id="price" th:field="*{price}"
+                      th:errorclass="bg-danger"></input>
+            <small th:if="${#fields.hasErrors('price')}"
+                   th:errors="*{price}"  class="text-danger">Product price error message</small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="quantity" class="h4 mb-2">Quantity</label>
+            </div>
+            <input type="text" class="form-control" id="quantity" th:field="*{quantity}"
+                   th:errorclass="bg-danger"></input>
+            <small th:if="${#fields.hasErrors('quantity')}"
+                   th:errors="*{quantity}"  class="text-danger">Product quantity error message</small>
+        </div>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-warning  mb-3" value="Register">Add product</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

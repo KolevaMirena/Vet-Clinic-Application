@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div th:object="${allPets}" class="container bg-blur rounded mt-5 det">
+        <h1 class="dethead" th:unless="${allPets.size()==0}">Clinic's patients</h1>
+        <h1 class="dethead" th:if="${allPets.size()==0}">No Registered patients!</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr th:unless="${allPets.size()==0}">
+                <th>Pet name</th>
+                <th>Pet type</th>
+                <th>Age</th>
+                <th>Owner</th>
+                <th>Vet</th>
+                <th>Last Manipulation Date</th>
+                <th>Manipulations Executed</th>
+                <th>Products bought</th>
+                <th></th>
+             </tr>
+             </thead>
+             <tbody >
+             <tr th:each="pet : ${allPets}">
+                 <th th:text="${pet.name}"></th>
+                 <th th:text="${pet.getPetType()}"></th>
+                 <th th:text="${pet.getAge()}"></th>
+                 <th th:text="${pet.getOwner().name}"></th>
+                 <th th:text="|Dr. ${pet.getVet().lastName}|"></th>
+                 <th th:text="${pet.getLastManipulationDate()}"></th>
+                 <th th:href="@{/pets/manipulations/{id}(id = ${pet.id})}">Manipulations</th>
+                 <th th:href="@{/pets/products/{id}(id = ${pet.id})}">Products</th>
+                 <th>
+                     <form method="POST" th:action="@{/pets/remove/{id}(id = ${pet.id})}">
+                         <button type="submit" name="submit" value="value" class="link-button">Remove Pet</button>
+                     </form>
+                 </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>
