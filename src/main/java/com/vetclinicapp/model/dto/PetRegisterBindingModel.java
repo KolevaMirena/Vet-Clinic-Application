@@ -19,7 +19,8 @@ public class PetRegisterBindingModel {
     private String name;
 
 
-    @Positive(message = "Pet age should be a positive number!")
+    @NotNull(message = "Please enter pet age!")
+    @Min(value = 0, message = "Pet age should be positive number!")
     private Long age;
 
 
