@@ -9,13 +9,13 @@ import java.time.LocalDate;
 @Table(name = "pet_manipulations")
 public class PetManipulation extends BaseEntity {
 
-    @Column
+    @Column(nullable = false)
     private String petName;
 
-    @Column
+    @Column(nullable = false)
     private String manipulationName;
 
-    @Column
+    @Column(nullable = false)
     private LocalDate manipulationDate;
 
 

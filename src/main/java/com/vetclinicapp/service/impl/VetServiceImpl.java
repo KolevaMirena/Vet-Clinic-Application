@@ -43,7 +43,6 @@ public class VetServiceImpl implements VetService {
 
         Vet currentVet = this.vetRepository.findByLastName(vetAssignBindingModel.getVetName());
 
-
         currentPet.setVet(currentVet);
         currentVet.getPets().add(currentPet);
 

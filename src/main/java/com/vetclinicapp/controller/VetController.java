@@ -86,7 +86,7 @@ public class VetController {
 
 
 
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors() || vetAssignBindingModel.getPetName() == null || vetAssignBindingModel.getVetName() == null){
             return new ModelAndView("vet-assign");
 
         }

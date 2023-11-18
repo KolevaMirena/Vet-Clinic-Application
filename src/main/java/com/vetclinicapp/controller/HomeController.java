@@ -54,18 +54,17 @@ public class HomeController {
         return modelAndView;
     }
 
-
     @GetMapping("/pets/all")
-    public ModelAndView allPets(){
+   public ModelAndView allPets(){
 
         ModelAndView modelAndView = new ModelAndView("pets-all");
 
-        List<PetViewModel> allPets = this.petService.getAllPetsOrderByName();
+       List<PetViewModel> allPets = this.petService.getAllPetsOrderByName();
 
-        modelAndView.addObject("allPets", allPets);
+       modelAndView.addObject("allPets", allPets);
 
         return modelAndView;
-    }
+   }
 
 
 

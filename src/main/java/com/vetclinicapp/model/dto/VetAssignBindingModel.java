@@ -1,5 +1,6 @@
 package com.vetclinicapp.model.dto;
 
+
 import javax.validation.constraints.NotNull;
 
 public class VetAssignBindingModel {
