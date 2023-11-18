@@ -23,4 +23,7 @@ public interface PetService {
     void remove(Long id);
 
 
+    List<PetViewModel> getAllPetsByVetId(Long id);
+
+    List<PetViewModel> getAllPetsByOwnerId(Long id);
 }

@@ -14,7 +14,8 @@ public interface VetRepository extends JpaRepository<Vet, Long> {
 
     List<Vet> findAll();
 
-
     Vet findByLastName(String lastNme);
+
+    List<Vet> findAllByOrderByFirstName();
 
 }

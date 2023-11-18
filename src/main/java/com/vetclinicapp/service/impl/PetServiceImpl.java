@@ -122,5 +122,20 @@ public class PetServiceImpl implements PetService {
 
     }
 
+    @Override
+    public List<PetViewModel> getAllPetsByVetId(Long id) {
+        return this.petRepository.findAllByVetId(id)
+                .stream()
+                .map(pet -> modelMapper.map(pet, PetViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PetViewModel> getAllPetsByOwnerId(Long id) {
+        return this.petRepository.findAllByOwnerId(id)
+                .stream()
+                .map(pet -> modelMapper.map(pet, PetViewModel.class))
+                .collect(Collectors.toList());
+    }
 
 }

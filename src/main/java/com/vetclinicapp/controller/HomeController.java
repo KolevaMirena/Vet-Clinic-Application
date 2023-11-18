@@ -1,10 +1,15 @@
 package com.vetclinicapp.controller;
 
+import com.vetclinicapp.model.view.OwnerViewModel;
 import com.vetclinicapp.model.view.PetViewModel;
 import com.vetclinicapp.model.view.ProductViewModel;
+import com.vetclinicapp.model.view.VetViewModel;
+import com.vetclinicapp.repository.OwnerRepository;
 import com.vetclinicapp.repository.PetRepository;
+import com.vetclinicapp.service.OwnerService;
 import com.vetclinicapp.service.PetService;
 import com.vetclinicapp.service.ProductService;
+import com.vetclinicapp.service.VetService;
 import com.vetclinicapp.service.impl.LoggedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +23,16 @@ public class HomeController {
     private final ProductService productService;
     private final LoggedUser loggedUser;
     private final PetService petService;
+    private final VetService vetService;
+    private final OwnerService ownerService;
 
-    public HomeController(ProductService productService, LoggedUser loggedUser, PetRepository petRepository, PetService petService) {
+    public HomeController(ProductService productService, LoggedUser loggedUser, PetRepository petRepository, PetService petService, VetService vetService, OwnerRepository ownerRepository, OwnerService ownerService) {
         this.productService = productService;
         this.loggedUser = loggedUser;
         this.petService = petService;
+        this.vetService = vetService;
+        this.ownerService = ownerService;
+
     }
 
     @GetMapping("/")
@@ -35,9 +45,7 @@ public class HomeController {
 
         if(!loggedUser.isLogged()){
             return new ModelAndView("redirect:/");
-
         }
-
         return new ModelAndView("home");
     }
 
@@ -66,14 +74,29 @@ public class HomeController {
         return modelAndView;
    }
 
+    @GetMapping("/vets/all")
+    public ModelAndView allVets(){
 
+        ModelAndView modelAndView = new ModelAndView("vets-all");
 
+        List<VetViewModel> allVetsOrderByName = this.vetService.getAllVetsOrderByName();
 
-    //vet/details
+        modelAndView.addObject("allVetsOrderByName", allVetsOrderByName);
 
-    //owner/details
+        return modelAndView;
+    }
 
+    @GetMapping("/owners/all")
+    public ModelAndView allOwners(){
 
+        ModelAndView modelAndView = new ModelAndView("owners-all");
+
+        List<OwnerViewModel> allOwnersOrderByName = this.ownerService.getAllOwnersOrderByName();
+
+        modelAndView.addObject("allOwnersOrderByName", allOwnersOrderByName);
+
+        return modelAndView;
+    }
 
 
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div th:object="${allPetsByVetId}" class="container bg-blur rounded mt-5 det">
+        <h1 class="dethead" th:unless="${allPetsByVetId.size()==0}">Vet's patients</h1>
+        <h1 class="dethead" th:if="${allPetsByVetId.size()==0}">No assigned patients!</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr th:unless="${allPetsByVetId.size()==0}">
+                <th>Pet name</th>
+                <th>Pet type</th>
+                <th>Age</th>
+                <th>Owner</th>
+                <th>Vet</th>
+                <th>Last Manipulation Date</th>
+                <th>Manipulations Executed</th>
+                <th>Products bought</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr th:each="pet : ${allPetsByVetId}">
+                <td th:text="${pet.name}"></td>
+                <td th:text="${pet.getPetType()}"></td>
+                <td th:text="${pet.getAge()}"></td>
+                <td th:text="${pet.getOwner().name}"></td>
+                <td th:text="|Dr. ${pet.getVet().lastName}|"></td>
+                <td th:text="${pet.getLastManipulationDate()}"></td>
+                <!--<td th:href="@{/pets/manipulations/{id}(id = ${pet.id})}">Manipulations</td>-->
+                <td><a th:href="@{/pet/manipulations/{name}(name = ${pet.getName()})}" style="display:block;">Manipulations</a></td>
+                <!--<td th:href="@{/pets/products/{id}(id = ${pet.id})}">Products</td>-->
+                <td><a th:href="@{/pet/products/{name}(name = ${pet.getName()})}" style="display:block;">Products</a></td>
+                <td>
+                    <form method="POST" th:action="@{/pets/remove/{id}(id = ${pet.id})}">
+                        <button type="submit" name="submit" value="value" class="link-button">Remove Pet</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

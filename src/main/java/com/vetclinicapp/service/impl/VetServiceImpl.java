@@ -4,6 +4,7 @@ import com.vetclinicapp.model.dto.VetAssignBindingModel;
 import com.vetclinicapp.model.entity.Pet;
 import com.vetclinicapp.model.entity.Vet;
 import com.vetclinicapp.model.service.VetServiceModel;
+import com.vetclinicapp.model.view.VetViewModel;
 import com.vetclinicapp.repository.PetRepository;
 import com.vetclinicapp.repository.VetRepository;
 import com.vetclinicapp.service.VetService;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -54,5 +56,20 @@ public class VetServiceImpl implements VetService {
     @Override
     public List<Vet> getAllVets() {
         return this.vetRepository.findAll();
+    }
+
+    @Override
+    public List<VetViewModel> getAllVetsOrderByName() {
+        return this.vetRepository.findAllByOrderByFirstName()
+                .stream()
+                .map(vet -> modelMapper.map(vet, VetViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void remove(Long id) {
+        this.vetRepository.deleteById(id);
+        //todo
+        //make all vet's patients unassigned
     }
 }

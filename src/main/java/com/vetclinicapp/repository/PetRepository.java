@@ -25,5 +25,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM pets order by name")
    List<Pet> findAllByOrderByName();
 
+    List<Pet> findAllByVetId(Long id);
 
+    List<Pet> findAllByOwnerId(Long id);
 }

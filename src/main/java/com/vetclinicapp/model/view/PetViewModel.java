@@ -13,13 +13,11 @@ import java.util.Set;
 
 public class PetViewModel{
 
-
     private Long id;
     private String name;
     private Long age;
     private Owner owner;
     private Vet vet;
-
     private LocalDate lastManipulationDate;
     private PetTypeEnum petType;
 

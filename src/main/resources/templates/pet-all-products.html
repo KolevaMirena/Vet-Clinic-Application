@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div th:object="${allPetProducts}" class="container bg-blur rounded mt-5 det">
+        <h1 class="dethead" th:unless="${allPetProducts.size()==0}">Products bought:</h1>
+        <h1 class="dethead" th:if="${allPetProducts.size()==0}">No Products sold to this pet!</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr th:unless="${allPetProducts.size()==0}">
+                <th>Pet Name</th>
+                <th>Product</th>
+                <th>Total quantity bought</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr th:each="petProduct : ${allPetProducts}">
+                <td th:text="${petProduct.getPetName()}"></td>
+                <td th:text="${petProduct.getProductName()}"></td>
+                <td th:text="${petProduct.getQuantity()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

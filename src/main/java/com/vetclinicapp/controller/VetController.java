@@ -6,6 +6,8 @@ import com.vetclinicapp.model.dto.VetRegisterBindingModel;
 import com.vetclinicapp.model.entity.Pet;
 import com.vetclinicapp.model.entity.Vet;
 import com.vetclinicapp.model.service.VetServiceModel;
+import com.vetclinicapp.model.view.PetManipulationViewModel;
+import com.vetclinicapp.model.view.PetViewModel;
 import com.vetclinicapp.service.PetService;
 import com.vetclinicapp.service.VetService;
 import org.modelmapper.ModelMapper;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +28,6 @@ public class VetController {
 
     private final VetService vetService;
     private final PetService petService;
-
     private final ModelMapper modelMapper;
 
 
@@ -84,16 +86,12 @@ public class VetController {
     public ModelAndView registerVet(@ModelAttribute("vetAssignBindingModel") @Valid VetAssignBindingModel vetAssignBindingModel,
                                     BindingResult bindingResult) {
 
-
-
         if(bindingResult.hasErrors() || vetAssignBindingModel.getPetName() == null || vetAssignBindingModel.getVetName() == null){
             return new ModelAndView("vet-assign");
 
         }
 
-
         boolean successfulAssigned = vetService.assignVet(vetAssignBindingModel);
-
 
         if(!successfulAssigned){
             ModelAndView modelAndView = new ModelAndView("vet-assign");
@@ -101,9 +99,32 @@ public class VetController {
             return modelAndView;
         }
 
+        return new ModelAndView("redirect:/home");
+    }
 
+
+    @PostMapping ("/vets/remove/{id}")
+    public ModelAndView removeVet(@PathVariable("id") Long id){
+
+        this.vetService.remove(id);
 
         return new ModelAndView("redirect:/home");
+
+    }
+
+
+    @GetMapping ("/vet/pets/{id}")
+    public ModelAndView vetPets(@PathVariable("id") Long id){
+
+        ModelAndView modelAndView = new ModelAndView("pets-all-by-vet");
+
+        List<PetViewModel> allPetsByVetId = this.petService.getAllPetsByVetId(id);
+
+        modelAndView.addObject("allPetsByVetId", allPetsByVetId);
+
+
+        return modelAndView;
+
     }
 
 }

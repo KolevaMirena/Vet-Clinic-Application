@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div th:object="${allVetsOrderByName}" class="container bg-blur rounded mt-5 det">
+        <h1 class="dethead" th:unless="${allVetsOrderByName.size()==0}">Clinic's Vets</h1>
+        <h1 class="dethead" th:if="${allVetsOrderByName.size()==0}">No Registered vets!</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr th:unless="${allVetsOrderByName.size()==0}">
+                <th>Vet name</th>
+                <th>Vet Specialty</th>
+                <th>Vet's patients</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr th:each="vet : ${allVetsOrderByName}">
+                <td th:text="|Dr. ${vet.getFirstName()} ${vet.getLastName()}|"></td>
+                <td th:text="${vet.getSpecialtyEnum()}"></td>
+
+                <td><a th:href="@{/vet/pets/{id}(id = ${vet.getId()})}" style="display:block;">Patients</a></td>
+                <td>
+                    <form method="POST" th:action="@{/vets/remove/{id}(id = ${vet.id})}">
+                        <button type="submit" name="submit" value="value" class="link-button">Remove Vet</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>
