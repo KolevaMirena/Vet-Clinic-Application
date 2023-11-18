@@ -2,11 +2,11 @@ package com.vetclinicapp.service.impl;
 
 import com.vetclinicapp.model.dto.PetManipulationBindingModel;
 import com.vetclinicapp.model.dto.PetRegisterBindingModel;
-import com.vetclinicapp.model.entity.Manipulation;
 import com.vetclinicapp.model.entity.Owner;
 import com.vetclinicapp.model.entity.Pet;
 import com.vetclinicapp.model.entity.PetManipulation;
 import com.vetclinicapp.model.service.PetServiceModel;
+import com.vetclinicapp.model.view.PetManipulationViewModel;
 import com.vetclinicapp.model.view.PetViewModel;
 import com.vetclinicapp.repository.ManipulationRepository;
 import com.vetclinicapp.repository.OwnerRepository;
@@ -28,17 +28,18 @@ public class PetServiceImpl implements PetService {
     private final OwnerRepository ownerRepository;
 
     private final ModelMapper modelMapper;
-
-    private final ManipulationRepository manipulationRepository;
-
     private final PetManipulationRepository petManipulationRepository;
 
-    public PetServiceImpl(PetRepository petRepository, OwnerRepository ownerRepository, ModelMapper modelMapper, ManipulationRepository manipulationRepository, PetManipulationRepository petManipulationRepository) {
+
+
+
+
+    public PetServiceImpl(PetRepository petRepository, OwnerRepository ownerRepository, ModelMapper modelMapper, ManipulationRepository manipulationRepository, PetManipulationRepository petManipulationRepository, PetManipulationRepository petManipulationRepository1) {
         this.petRepository = petRepository;
         this.ownerRepository = ownerRepository;
         this.modelMapper = modelMapper;
-        this.manipulationRepository = manipulationRepository;
-        this.petManipulationRepository = petManipulationRepository;
+
+        this.petManipulationRepository = petManipulationRepository1;
     }
 
     @Override
@@ -120,4 +121,6 @@ public class PetServiceImpl implements PetService {
 
 
     }
+
+
 }

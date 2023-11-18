@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div th:object="${petManipulations}" class="container bg-blur rounded mt-5 det">
+        <h1 class="dethead" th:unless="${petManipulations.size()==0}">Patient's manipulations</h1>
+        <h1 class="dethead" th:if="${petManipulations.size()==0}">No Manipulations executed!</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr th:unless="${petManipulations.size()==0}">
+                <th>Pet Name</th>
+                <th>Manipulation</th>
+                <th>Execution Date</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr th:each="petManipulation : ${petManipulations}">
+                <td th:text="${petManipulation.getPetName()}"></td>
+                <td th:text="${petManipulation.getManipulationName()}"></td>
+                <td th:text="${petManipulation.getManipulationDate()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

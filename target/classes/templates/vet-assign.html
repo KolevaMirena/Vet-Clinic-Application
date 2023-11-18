@@ -21,6 +21,8 @@
                 <option value="0">select option</option>
                 <option th:each="pet : ${unassignedPets}" th:value="${pet.getName()}" th:text="${pet.getName()}"></option>
             </select>
+            <small  th:if="${#fields.hasErrors('petName')}"
+                    th:errors="*{petName}" class="text-danger">Pet name error message</small>
         </div>
 
 
@@ -33,6 +35,8 @@
                 <option value="0">select option</option>
                 <option th:each="vet : ${allVets}" th:value="${vet.getLastName()}" th:text="|Dr. ${vet.getLastName()}|"></option>
             </select>
+            <small  th:if="${#fields.hasErrors('vetName')}"
+                    th:errors="*{vetName}" class="text-danger">Vet name error message</small>
         </div>
 
         <div class="button-holder d-flex justify-content-center">

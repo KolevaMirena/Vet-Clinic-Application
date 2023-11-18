@@ -1,27 +1,18 @@
-package com.vetclinicapp.model.entity;
+package com.vetclinicapp.model.view;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "pet_manipulations")
-public class PetManipulation extends BaseEntity {
+public class PetManipulationViewModel {
 
 
 
-    @Column(nullable = false)
+
     private String petName;
-
-    @Column(nullable = false)
     private String manipulationName;
-
-    @Column(nullable = false)
     private LocalDate manipulationDate;
 
 
-    public PetManipulation() {
+    public PetManipulationViewModel() {
     }
 
 

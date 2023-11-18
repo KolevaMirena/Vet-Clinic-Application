@@ -5,7 +5,9 @@ import com.vetclinicapp.model.dto.PetRegisterBindingModel;
 import com.vetclinicapp.model.entity.Manipulation;
 import com.vetclinicapp.model.entity.Pet;
 import com.vetclinicapp.model.service.PetServiceModel;
+import com.vetclinicapp.model.view.PetManipulationViewModel;
 import com.vetclinicapp.service.ManipulationService;
+import com.vetclinicapp.service.PetManipulationService;
 import com.vetclinicapp.service.PetService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -24,12 +26,14 @@ public class PetController {
 
     private final ManipulationService manipulationService;
     private final ModelMapper modelMapper;
+    private final PetManipulationService petManipulationService;
 
 
-    public PetController(PetService petService, ManipulationService manipulationService, ModelMapper modelMapper) {
+    public PetController(PetService petService, ManipulationService manipulationService, ModelMapper modelMapper, PetManipulationService petManipulationService) {
         this.petService = petService;
         this.manipulationService = manipulationService;
         this.modelMapper = modelMapper;
+        this.petManipulationService = petManipulationService;
     }
 
     @GetMapping("/pet/add")
@@ -112,5 +116,21 @@ public class PetController {
         return new ModelAndView("redirect:/home");
 
     }
+
+    @GetMapping ("/pets/manipulations/{name}")
+    public ModelAndView petManipulations(@PathVariable("name") String name){
+
+        ModelAndView modelAndView = new ModelAndView("pet-all-manipulations");
+
+        List<PetManipulationViewModel> petManipulations = this.petManipulationService.getPetManipulations(name);
+
+        modelAndView.addObject("petManipulations", petManipulations);
+
+
+        return modelAndView;
+
+    }
+
+
 
 }

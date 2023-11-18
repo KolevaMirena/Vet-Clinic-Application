@@ -4,6 +4,7 @@ import com.vetclinicapp.model.dto.PetManipulationBindingModel;
 import com.vetclinicapp.model.dto.PetRegisterBindingModel;
 import com.vetclinicapp.model.entity.Pet;
 import com.vetclinicapp.model.service.PetServiceModel;
+import com.vetclinicapp.model.view.PetManipulationViewModel;
 import com.vetclinicapp.model.view.PetViewModel;
 
 import java.util.List;
@@ -20,5 +21,6 @@ public interface PetService {
     List<PetViewModel> getAllPetsOrderByName();
 
     void remove(Long id);
+
 
 }
