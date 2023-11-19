@@ -16,4 +16,6 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 
     List<Owner> getOwnersByOrderByName();
 
+    Owner findOwnerById(Long id);
+
 }

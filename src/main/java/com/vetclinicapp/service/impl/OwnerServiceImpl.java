@@ -1,15 +1,16 @@
 package com.vetclinicapp.service.impl;
 
 
-import com.vetclinicapp.model.entity.Owner;
+import com.vetclinicapp.model.entity.*;
 import com.vetclinicapp.model.service.OwnerServiceModel;
 import com.vetclinicapp.model.view.OwnerViewModel;
-import com.vetclinicapp.repository.OwnerRepository;
+import com.vetclinicapp.repository.*;
 import com.vetclinicapp.service.OwnerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,10 +18,19 @@ public class OwnerServiceImpl implements OwnerService {
 
     private final OwnerRepository ownerRepository;
     private final ModelMapper modelMapper;
+    private final PetProductRepository petProductRepository;
 
-    public OwnerServiceImpl(OwnerRepository ownerRepository, ModelMapper modelMapper) {
+    private final PetManipulationRepository petManipulationRepository;
+    private final VetRepository vetRepository;
+    private final PetRepository petRepository;
+
+    public OwnerServiceImpl(OwnerRepository ownerRepository, ModelMapper modelMapper, PetProductRepository petProductRepository, PetManipulationRepository petManipulationRepository, VetRepository vetRepository, PetRepository petRepository) {
         this.ownerRepository = ownerRepository;
         this.modelMapper = modelMapper;
+        this.petProductRepository = petProductRepository;
+        this.petManipulationRepository = petManipulationRepository;
+        this.vetRepository = vetRepository;
+        this.petRepository = petRepository;
     }
 
     @Override
@@ -42,9 +52,33 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public void remove(Long id) {
-        this.ownerRepository.deleteById(id);
+
 
         //todo
-        //remove all owners pets from the db
+        //find all owners pets
+        Owner ownerById = this.ownerRepository.findOwnerById(id);
+        Set<Pet> currentOwnerPets = ownerById.getPets();
+
+        //remove pets from:
+            //vets collections
+
+        for (Pet currentOwnerPet : currentOwnerPets) {
+
+            Vet currentVet = currentOwnerPet.getVet();
+            currentVet.getPets().remove(currentOwnerPet);
+            this.vetRepository.save(currentVet);
+
+            PetProduct currentPetProduct = this.petProductRepository.findByPetName(currentOwnerPet.getName());
+            this.petProductRepository.delete(currentPetProduct);
+
+            PetManipulation currentPetManipulation = this.petManipulationRepository.findByPetName(currentOwnerPet.getName());
+            this.petManipulationRepository.delete(currentPetManipulation);
+
+        }
+
+        this.petRepository.deleteAll(currentOwnerPets);
+
+        //remove owner
+        this.ownerRepository.deleteById(id);
     }
 }

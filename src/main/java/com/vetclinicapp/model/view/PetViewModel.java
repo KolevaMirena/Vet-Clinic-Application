@@ -1,15 +1,12 @@
 package com.vetclinicapp.model.view;
 
-import com.vetclinicapp.model.entity.Manipulation;
-import com.vetclinicapp.model.entity.Owner;
-import com.vetclinicapp.model.entity.Product;
-import com.vetclinicapp.model.entity.Vet;
-import com.vetclinicapp.model.enums.PetTypeEnum;
 
+import com.vetclinicapp.model.entity.Owner;
+import com.vetclinicapp.model.entity.Vet;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import static org.springframework.util.StringUtils.replace;
+
 
 public class PetViewModel{
 
@@ -19,7 +16,7 @@ public class PetViewModel{
     private Owner owner;
     private Vet vet;
     private LocalDate lastManipulationDate;
-    private PetTypeEnum petType;
+    private String petType;
 
 
     public PetViewModel() {
@@ -74,11 +71,11 @@ public class PetViewModel{
         this.lastManipulationDate = lastManipulationDate;
     }
 
-    public PetTypeEnum getPetType() {
-        return petType;
+    public String getPetType() {
+        return replace(petType, "_", " ").toLowerCase();
     }
 
-    public void setPetType(PetTypeEnum petType) {
+    public void setPetType(String petType) {
         this.petType = petType;
     }
 }

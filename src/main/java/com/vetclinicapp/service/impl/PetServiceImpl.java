@@ -2,16 +2,10 @@ package com.vetclinicapp.service.impl;
 
 import com.vetclinicapp.model.dto.PetManipulationBindingModel;
 import com.vetclinicapp.model.dto.PetRegisterBindingModel;
-import com.vetclinicapp.model.entity.Owner;
-import com.vetclinicapp.model.entity.Pet;
-import com.vetclinicapp.model.entity.PetManipulation;
+import com.vetclinicapp.model.entity.*;
 import com.vetclinicapp.model.service.PetServiceModel;
-import com.vetclinicapp.model.view.PetManipulationViewModel;
 import com.vetclinicapp.model.view.PetViewModel;
-import com.vetclinicapp.repository.ManipulationRepository;
-import com.vetclinicapp.repository.OwnerRepository;
-import com.vetclinicapp.repository.PetManipulationRepository;
-import com.vetclinicapp.repository.PetRepository;
+import com.vetclinicapp.repository.*;
 import com.vetclinicapp.service.PetService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -29,17 +23,21 @@ public class PetServiceImpl implements PetService {
 
     private final ModelMapper modelMapper;
     private final PetManipulationRepository petManipulationRepository;
+    private final PetProductRepository petProductRepository;
+    private final VetRepository vetRepository;
 
 
 
 
 
-    public PetServiceImpl(PetRepository petRepository, OwnerRepository ownerRepository, ModelMapper modelMapper, ManipulationRepository manipulationRepository, PetManipulationRepository petManipulationRepository, PetManipulationRepository petManipulationRepository1) {
+    public PetServiceImpl(PetRepository petRepository, OwnerRepository ownerRepository, ModelMapper modelMapper, ManipulationRepository manipulationRepository, PetManipulationRepository petManipulationRepository, PetManipulationRepository petManipulationRepository1, PetProductRepository petProductRepository, VetRepository vetRepository) {
         this.petRepository = petRepository;
         this.ownerRepository = ownerRepository;
         this.modelMapper = modelMapper;
 
         this.petManipulationRepository = petManipulationRepository1;
+        this.petProductRepository = petProductRepository;
+        this.vetRepository = vetRepository;
     }
 
     @Override
@@ -103,7 +101,7 @@ public class PetServiceImpl implements PetService {
                     petViewModel.setOwner(pet.getOwner());
                     petViewModel.setVet(pet.getVet());
                     petViewModel.setLastManipulationDate(pet.getLastManipulationDate());
-                    petViewModel.setPetType(pet.getPetType());
+                    petViewModel.setPetType(pet.getPetType().name());
 
                     return petViewModel;
 
@@ -112,11 +110,33 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public void remove(Long id) {
-        //  TODO
+
         // remove from petProduct
+
+        Pet petById = this.petRepository.findPetById(id);
+        PetProduct currentPetProduct = this.petProductRepository.findByPetName(petById.getName());
+        this.petProductRepository.delete(currentPetProduct);
+
         //remove from petManipulation
+
+        PetManipulation currentPetManipulation = this.petManipulationRepository.findByPetName(petById.getName());
+        this.petManipulationRepository.delete(currentPetManipulation);
+
         //remove from Owner petList
+
+        Owner owner = petById.getOwner();
+        Set<Pet> pets = owner.getPets();
+        pets.remove(petById);
+        this.ownerRepository.save(owner);
+
         //remove from vet petList
+
+        Vet vet = petById.getVet();
+        List<Pet> vetPets = vet.getPets();
+       vetPets.remove(petById);
+       this.vetRepository.save(vet);
+
+
         this.petRepository.deleteById(id);
 
 

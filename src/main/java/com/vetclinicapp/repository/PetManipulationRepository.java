@@ -1,6 +1,7 @@
 package com.vetclinicapp.repository;
 
 import com.vetclinicapp.model.entity.PetManipulation;
+import com.vetclinicapp.model.entity.PetProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,6 @@ public interface PetManipulationRepository extends JpaRepository<PetManipulation
     List<PetManipulation> getPetManipulationsByPetNameOrderByManipulationDateDesc(String name);
 
 
+    PetManipulation findByPetName(String name);
 
 }

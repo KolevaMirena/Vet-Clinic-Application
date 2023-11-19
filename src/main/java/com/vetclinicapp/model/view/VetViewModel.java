@@ -2,13 +2,15 @@ package com.vetclinicapp.model.view;
 
 import com.vetclinicapp.model.enums.VetSpecialtyEnum;
 
+import static org.springframework.util.StringUtils.replace;
+
 
 public class VetViewModel {
 
     private Long id;
     private String firstName;
     private String lastName;
-    private VetSpecialtyEnum specialtyEnum;
+    private String specialtyEnum;
 
     public VetViewModel() {
     }
@@ -37,11 +39,11 @@ public class VetViewModel {
         this.lastName = lastName;
     }
 
-    public VetSpecialtyEnum getSpecialtyEnum() {
-        return specialtyEnum;
+    public String getSpecialtyEnum() {
+        return replace(specialtyEnum, "_", " ").toLowerCase();
     }
 
-    public void setSpecialtyEnum(VetSpecialtyEnum specialtyEnum) {
+    public void setSpecialtyEnum(String specialtyEnum) {
         this.specialtyEnum = specialtyEnum;
     }
 }

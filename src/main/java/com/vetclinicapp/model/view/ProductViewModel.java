@@ -2,11 +2,13 @@ package com.vetclinicapp.model.view;
 import com.vetclinicapp.model.enums.ProductTypeEnum;
 import java.math.BigDecimal;
 
+import static org.springframework.util.StringUtils.replace;
+
 public class ProductViewModel {
 
 
     private String name;
-    private ProductTypeEnum type;
+    private String type;
     private BigDecimal price;
     private Long quantity;
 
@@ -22,11 +24,11 @@ public class ProductViewModel {
         this.name = name;
     }
 
-    public ProductTypeEnum getType() {
-        return type;
+    public String getType() {
+        return replace(type, "_", " ").toLowerCase();
     }
 
-    public void setType(ProductTypeEnum type) {
+    public void setType(String type) {
         this.type = type;
     }
 

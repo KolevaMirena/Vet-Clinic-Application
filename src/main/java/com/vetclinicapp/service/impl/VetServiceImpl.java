@@ -49,6 +49,7 @@ public class VetServiceImpl implements VetService {
         currentVet.getPets().add(currentPet);
 
         this.petRepository.save(currentPet);
+        this.vetRepository.save(currentVet);
 
         return true;
     }
@@ -68,8 +69,17 @@ public class VetServiceImpl implements VetService {
 
     @Override
     public void remove(Long id) {
-        this.vetRepository.deleteById(id);
         //todo
         //make all vet's patients unassigned
+
+        List<Pet> allByVetId = this.petRepository.findAllByVetId(id);
+
+        for (Pet pet : allByVetId) {
+            pet.setVet(null);
+            this.petRepository.save(pet);
+        }
+
+        this.vetRepository.deleteById(id);
+
     }
 }
