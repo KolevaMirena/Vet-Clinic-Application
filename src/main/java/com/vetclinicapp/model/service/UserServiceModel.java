@@ -1,8 +1,5 @@
 package com.vetclinicapp.model.service;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.Column;
 
 public class UserServiceModel {
 

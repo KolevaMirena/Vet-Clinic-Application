@@ -1,13 +1,12 @@
 package com.vetclinicapp.model.dto;
 
 
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class OwnerRegisterBindingModel {
 

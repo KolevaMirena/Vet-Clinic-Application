@@ -1,10 +1,9 @@
 package com.vetclinicapp.model.entity;
 
 import com.vetclinicapp.model.enums.ProductTypeEnum;
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 
 @Entity

@@ -1,15 +1,9 @@
 package com.vetclinicapp.model.dto;
 
-import com.vetclinicapp.model.entity.Manipulation;
-import com.vetclinicapp.model.enums.PetTypeEnum;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.*;
-import java.util.List;
+import com.vetclinicapp.model.enums.PetTypeEnum;
+import jakarta.validation.constraints.*;
+
 
 public class PetRegisterBindingModel {
 

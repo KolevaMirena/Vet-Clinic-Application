@@ -28,7 +28,11 @@
                 <td th:text="${pet.getPetType()}"></td>
                 <td th:text="${pet.getAge()}"></td>
                 <td th:text="${pet.getOwner().name}"></td>
-                <td th:text="|Dr. ${pet.getVet().lastName}|"></td>
+                <!-- <td th:text="|Dr. ${pet.getVet().lastName}|"></td> -->
+                <td>
+                    <span th:if="${pet.getVet()  !=  null}" th:text="|Dr. ${pet.getVet().lastName}|"></span>
+                    <span th:unless="${pet.getVet() !=  null}">Not Assigned</span>
+                </td>
                 <td th:text="${pet.getLastManipulationDate()}"></td>
                 <!--<td th:href="@{/pets/manipulations/{id}(id = ${pet.id})}">Manipulations</td>-->
                 <td><a th:href="@{/pet/manipulations/{name}(name = ${pet.getName()})}" style="display:block;">Manipulations</a></td>

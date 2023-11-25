@@ -1,18 +1,14 @@
 package com.vetclinicapp.model.entity;
 
 
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "owners")
 public class Owner extends BaseEntity {
-
-
-
 
 
     @Column(nullable = false, unique = true)

@@ -1,18 +1,10 @@
 package com.vetclinicapp.model.entity;
-
-
 import com.vetclinicapp.model.enums.PetTypeEnum;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.PastOrPresent;
 import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Entity
 @Table(name = "pets")

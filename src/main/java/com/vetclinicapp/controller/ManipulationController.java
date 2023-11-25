@@ -1,9 +1,8 @@
 package com.vetclinicapp.controller;
-
-
 import com.vetclinicapp.model.dto.ManipulationAddBindingModel;
 import com.vetclinicapp.model.service.ManipulationServiceModel;
 import com.vetclinicapp.service.ManipulationService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,7 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+
 
 @Controller
 public class ManipulationController {

@@ -1,5 +1,5 @@
 package com.vetclinicapp.model.dto;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 public class UserRegisterBindingModel {
 

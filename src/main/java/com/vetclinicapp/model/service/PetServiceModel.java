@@ -1,19 +1,15 @@
 package com.vetclinicapp.model.service;
 
-import com.vetclinicapp.model.entity.Manipulation;
+
 import com.vetclinicapp.model.entity.Owner;
-import com.vetclinicapp.model.entity.Product;
+
 import com.vetclinicapp.model.entity.Vet;
 import com.vetclinicapp.model.enums.PetTypeEnum;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
+
+
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 public class PetServiceModel {
 

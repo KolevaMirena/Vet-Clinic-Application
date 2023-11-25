@@ -93,6 +93,8 @@ footer {
 
 .logoutbtn {
     border: none;
+    background: none;
+    font-weight : bold ;
 }
 
 
@@ -191,8 +193,6 @@ footer {
 .gap{
     column-gap: 40px;
 }
-
-
 
 
 

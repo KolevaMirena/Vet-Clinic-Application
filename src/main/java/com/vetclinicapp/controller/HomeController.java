@@ -99,4 +99,17 @@ public class HomeController {
     }
 
 
+    @GetMapping("/users/all")
+    public ModelAndView allUsers(){
+
+        ModelAndView modelAndView = new ModelAndView("users-all");
+
+        //List<OwnerViewModel> allOwnersOrderByName = this.ownerService.getAllOwnersOrderByName();
+
+        //modelAndView.addObject("allOwnersOrderByName", allOwnersOrderByName);
+
+        return modelAndView;
+    }
+
+
 }

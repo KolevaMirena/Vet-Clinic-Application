@@ -62,21 +62,23 @@ public class OwnerServiceImpl implements OwnerService {
         //remove pets from:
             //vets collections
 
-        for (Pet currentOwnerPet : currentOwnerPets) {
+        if(!currentOwnerPets.isEmpty()) {
+            for (Pet currentOwnerPet : currentOwnerPets) {
 
-            Vet currentVet = currentOwnerPet.getVet();
-            currentVet.getPets().remove(currentOwnerPet);
-            this.vetRepository.save(currentVet);
+                Vet currentVet = currentOwnerPet.getVet();
+                currentVet.getPets().remove(currentOwnerPet);
+                this.vetRepository.save(currentVet);
 
-            PetProduct currentPetProduct = this.petProductRepository.findByPetName(currentOwnerPet.getName());
-            this.petProductRepository.delete(currentPetProduct);
+                PetProduct currentPetProduct = this.petProductRepository.findByPetName(currentOwnerPet.getName());
+                this.petProductRepository.delete(currentPetProduct);
 
-            PetManipulation currentPetManipulation = this.petManipulationRepository.findByPetName(currentOwnerPet.getName());
-            this.petManipulationRepository.delete(currentPetManipulation);
+                PetManipulation currentPetManipulation = this.petManipulationRepository.findByPetName(currentOwnerPet.getName());
+                this.petManipulationRepository.delete(currentPetManipulation);
 
+            }
+
+            this.petRepository.deleteAll(currentOwnerPets);
         }
-
-        this.petRepository.deleteAll(currentOwnerPets);
 
         //remove owner
         this.ownerRepository.deleteById(id);

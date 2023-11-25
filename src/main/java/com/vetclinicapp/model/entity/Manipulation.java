@@ -2,18 +2,15 @@ package com.vetclinicapp.model.entity;
 
 
 import com.vetclinicapp.model.enums.ManipulationTypeEnum;
-import org.hibernate.annotations.Cache;
-import org.hibernate.validator.constraints.Length;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
+
 
 @Entity
 @Table(name = "manipulations")
-public class Manipulation extends  BaseEntity{
+public class Manipulation extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String name;

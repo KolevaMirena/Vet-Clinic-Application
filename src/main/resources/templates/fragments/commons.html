@@ -40,8 +40,12 @@
                 </li>
 
                 <li class="nav-item col-md-4">
+                    <a class="nav-link my-text-color active h5" th:href="@{/users/all}">Administration</a>
+                </li>
+
+                <li class="nav-item col-md-4">
                     <form th:action="@{/logout}" th:method="POST">
-                        <button type="submit" class="nav-link my-text-color active h5 logoutbtn" >Logout</button>
+                        <button type="submit" class="btn-link nav-link my-text-color active h5 logoutbtn" >Logout</button>
                     </form>
 
                 </li>

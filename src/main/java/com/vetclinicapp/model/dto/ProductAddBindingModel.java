@@ -2,7 +2,7 @@ package com.vetclinicapp.model.dto;
 
 import com.vetclinicapp.model.enums.ProductTypeEnum;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class ProductAddBindingModel {

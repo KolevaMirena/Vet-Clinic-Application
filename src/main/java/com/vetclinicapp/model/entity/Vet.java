@@ -2,9 +2,9 @@ package com.vetclinicapp.model.entity;
 
 
 import com.vetclinicapp.model.enums.VetSpecialtyEnum;
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
