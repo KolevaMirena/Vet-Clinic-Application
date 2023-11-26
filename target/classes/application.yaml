@@ -27,6 +27,7 @@ thymeleaf: # Thymeleaf
       period: 0
 logging:
   level:
+    org.springframework.security: TRACE
     org:
       hibernate:
         type:

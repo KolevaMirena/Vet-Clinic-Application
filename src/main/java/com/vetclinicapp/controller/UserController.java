@@ -1,7 +1,6 @@
 package com.vetclinicapp.controller;
 
 
-import com.vetclinicapp.model.dto.UserLoginBindingModel;
 import com.vetclinicapp.model.dto.UserRegisterBindingModel;
 import com.vetclinicapp.model.service.UserServiceModel;
 import com.vetclinicapp.service.UserService;
@@ -28,31 +27,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public ModelAndView login(@ModelAttribute("userLoginBindingModel") UserLoginBindingModel userLoginBindingModel){
+    public ModelAndView login(){
         return new ModelAndView("login");
     }
 
-
-    @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute @Valid UserLoginBindingModel userLoginBindingModel, BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
-            return new ModelAndView("login");
-
-        }
-
-        boolean successfulLogin = userService.login(userLoginBindingModel);
-
-        if(!successfulLogin){
-            ModelAndView modelAndView = new ModelAndView("login");
-            modelAndView.addObject("hasLoginError", true);
-            return modelAndView;
-        }
-
-
-        return new ModelAndView("redirect:/home");
-
-    }
 
 
     @GetMapping("/register")
@@ -87,11 +65,4 @@ public class UserController {
     }
 
 
-    @PostMapping("/logout")
-    public ModelAndView logout() {
-
-        this.userService.logout();
-
-        return new ModelAndView("redirect:/");
-    }
 }

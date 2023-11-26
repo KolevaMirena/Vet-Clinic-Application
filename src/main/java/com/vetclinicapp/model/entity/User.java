@@ -20,12 +20,12 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    List<Role> roles;
+   // @ManyToMany
+   // @JoinTable(
+   //         name = "user_role",
+   //         joinColumns = @JoinColumn(name = "user_id"),
+   //         inverseJoinColumns = @JoinColumn(name = "role_id"))
+   // List<Role> roles;
 
 
 
@@ -50,11 +50,5 @@ public class User extends BaseEntity{
         this.password = password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 }

@@ -15,8 +15,8 @@ public class Role extends BaseEntity{
     UserRoleEnum roleName;
 
 
-    @ManyToMany(mappedBy = "roles")
-    List<User> users;
+   // @ManyToMany(mappedBy = "roles")
+   // List<User> users;
 
 
     public Role() {
@@ -31,11 +31,5 @@ public class Role extends BaseEntity{
         this.roleName = roleName;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 }

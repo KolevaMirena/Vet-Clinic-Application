@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -31,19 +32,19 @@
 
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
-                <li class="nav-item col-md-4">
+                <li class="nav-item col-md-4" sec:authorize="!isAuthenticated()">
                     <a class="nav-link active h5 my-text-color" th:href="@{/login}">Login</a>
                 </li>
 
-                <li class="nav-item col-md-4">
+                <li class="nav-item col-md-4" sec:authorize="!isAuthenticated()">
                     <a class="nav-link my-text-color active h5" th:href="@{/register}">Register</a>
                 </li>
 
-                <li class="nav-item col-md-4">
-                    <a class="nav-link my-text-color active h5" th:href="@{/users/all}">Administration</a>
+                <li class="nav-item col-md-4" sec:authorize="isAuthenticated()">
+                    <a class="nav-link my-text-color active h5" th:href="@{/users/all}">Admin</a>
                 </li>
 
-                <li class="nav-item col-md-4">
+                <li class="nav-item col-md-4" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="POST">
                         <button type="submit" class="btn-link nav-link my-text-color active h5 logoutbtn" >Logout</button>
                     </form>
