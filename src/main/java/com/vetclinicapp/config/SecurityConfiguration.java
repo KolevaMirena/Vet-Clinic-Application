@@ -1,8 +1,11 @@
 package com.vetclinicapp.config;
 
 
+import com.vetclinicapp.model.entity.Role;
+import com.vetclinicapp.model.enums.UserRoleEnum;
 import com.vetclinicapp.repository.UserRepository;
 import com.vetclinicapp.service.impl.VetClinicAppUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
+
+    private final String rememberMeKey;
+
+
+    public SecurityConfiguration(@Value("${Vet-Clinic-Application.remember.me.key}") String rememberMeKey){
+
+
+        this.rememberMeKey = rememberMeKey;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -25,6 +38,8 @@ public class SecurityConfiguration {
 
                     authorizeRequest.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                             .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
+                            .requestMatchers("/pets/all", "/vets/all", "/owners/all", "/products/available").permitAll()
+                            .requestMatchers("/users/all").hasRole(UserRoleEnum.ADMIN.name())
                             .anyRequest().authenticated();
 
                 }
@@ -51,9 +66,18 @@ public class SecurityConfiguration {
                             .logoutSuccessUrl("/")
                             .invalidateHttpSession(true);
                 }
+        ).rememberMe(
+
+                rememberMe ->{
+
+                    rememberMe.key(rememberMeKey)
+                            .rememberMeParameter("rememberme")
+                            .rememberMeCookieName("rememberme");
+
+                }
+
         );
 
-        //TODO rememberme
 
       return   httpSecurity.build();
 

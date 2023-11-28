@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head"></head>
 <body>
 <header th:replace="fragments/commons::nav"></header>
@@ -14,7 +15,7 @@
                 <th>Vet name</th>
                 <th>Vet Specialty</th>
                 <th>Vet's patients</th>
-                <th></th>
+                <th sec:authorize="hasRole('ADMIN')"></th>
             </tr>
             </thead>
             <tbody >
@@ -23,7 +24,7 @@
                 <td th:text="${vet.getSpecialtyEnum()}"></td>
 
                 <td><a th:href="@{/vet/pets/{id}(id = ${vet.getId()})}" style="display:block;">Patients</a></td>
-                <td>
+                <td sec:authorize="hasRole('ADMIN')">
                     <form method="POST" th:action="@{/vets/remove/{id}(id = ${vet.id})}">
                         <button type="submit" name="submit" value="value" class="link-button">Remove Vet</button>
                     </form>

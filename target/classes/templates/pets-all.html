@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head"></head>
 <body>
 <header th:replace="fragments/commons::nav"></header>
@@ -19,7 +20,7 @@
                 <th>Last Manipulation Date</th>
                 <th>Manipulations Executed</th>
                 <th>Products bought</th>
-                <th></th>
+                <th sec:authorize="hasRole('ADMIN')"></th>
              </tr>
              </thead>
              <tbody >
@@ -38,7 +39,7 @@
                  <td><a th:href="@{/pet/manipulations/{name}(name = ${pet.getName()})}" style="display:block;">Manipulations</a></td>
                  <!--<td th:href="@{/pets/products/{id}(id = ${pet.id})}">Products</td>-->
                  <td><a th:href="@{/pet/products/{name}(name = ${pet.getName()})}" style="display:block;">Products</a></td>
-                 <td>
+                 <td sec:authorize="hasRole('ADMIN')">
                      <form method="POST" th:action="@{/pets/remove/{id}(id = ${pet.id})}">
                          <button type="submit" name="submit" value="value" class="link-button">Remove Pet</button>
                      </form>
