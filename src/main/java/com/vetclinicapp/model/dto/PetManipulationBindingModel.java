@@ -15,7 +15,7 @@ public class PetManipulationBindingModel {
     @NotNull(message = "Please choose manipulation!")
     private String manipulationName;
 
-    @PastOrPresent(message = "Execution date could not be in the future!")
+    @PastOrPresent(message = "Manipulation date could not be in the future!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate executionDate;
 

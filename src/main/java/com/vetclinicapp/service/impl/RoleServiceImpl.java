@@ -49,4 +49,9 @@ public class RoleServiceImpl implements RoleService {
 
 
     }
+
+    @Override
+    public List<Role> getAllRoles() {
+      return   this.roleRepository.findAll();
+    }
 }

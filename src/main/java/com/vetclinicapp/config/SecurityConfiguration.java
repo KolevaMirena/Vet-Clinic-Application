@@ -1,7 +1,5 @@
 package com.vetclinicapp.config;
 
-
-import com.vetclinicapp.model.entity.Role;
 import com.vetclinicapp.model.enums.UserRoleEnum;
 import com.vetclinicapp.repository.UserRepository;
 import com.vetclinicapp.service.impl.VetClinicAppUserDetailsService;
@@ -14,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+
 
 @Configuration
 public class SecurityConfiguration {
@@ -31,7 +31,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-
         httpSecurity.authorizeHttpRequests(
 
                 authorizeRequest ->{
@@ -40,6 +39,8 @@ public class SecurityConfiguration {
                             .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
                             .requestMatchers("/pets/all", "/vets/all", "/owners/all", "/products/available").permitAll()
                             .requestMatchers("/users/all").hasRole(UserRoleEnum.ADMIN.name())
+                            .requestMatchers("/user/roles/{id}").hasRole(UserRoleEnum.ADMIN.name())
+                            .requestMatchers("/user/{userId}/addRole/{roleId}").hasRole(UserRoleEnum.ADMIN.name())
                             .anyRequest().authenticated();
 
                 }

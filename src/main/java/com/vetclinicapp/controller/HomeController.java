@@ -1,17 +1,16 @@
 package com.vetclinicapp.controller;
 
-import com.vetclinicapp.model.view.OwnerViewModel;
-import com.vetclinicapp.model.view.PetViewModel;
-import com.vetclinicapp.model.view.ProductViewModel;
-import com.vetclinicapp.model.view.VetViewModel;
+import com.vetclinicapp.model.dto.RoleAddBindingModel;
+import com.vetclinicapp.model.entity.Role;
+import com.vetclinicapp.model.view.*;
 import com.vetclinicapp.repository.OwnerRepository;
 import com.vetclinicapp.repository.PetRepository;
-import com.vetclinicapp.service.OwnerService;
-import com.vetclinicapp.service.PetService;
-import com.vetclinicapp.service.ProductService;
-import com.vetclinicapp.service.VetService;
+import com.vetclinicapp.service.*;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -24,14 +23,19 @@ public class HomeController {
     private final PetService petService;
     private final VetService vetService;
     private final OwnerService ownerService;
+    private final UserService userService;
+    private final RoleService roleService;
 
-    public HomeController(ProductService productService,  PetRepository petRepository, PetService petService, VetService vetService, OwnerRepository ownerRepository, OwnerService ownerService) {
+
+    public HomeController(ProductService productService, PetRepository petRepository, PetService petService, VetService vetService, OwnerRepository ownerRepository, OwnerService ownerService, UserService userService, RoleService roleService) {
         this.productService = productService;
 
         this.petService = petService;
         this.vetService = vetService;
         this.ownerService = ownerService;
 
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/")
@@ -93,19 +97,6 @@ public class HomeController {
         List<OwnerViewModel> allOwnersOrderByName = this.ownerService.getAllOwnersOrderByName();
 
         modelAndView.addObject("allOwnersOrderByName", allOwnersOrderByName);
-
-        return modelAndView;
-    }
-
-
-    @GetMapping("/users/all")
-    public ModelAndView allUsers(){
-
-        ModelAndView modelAndView = new ModelAndView("users-all");
-
-        //List<OwnerViewModel> allOwnersOrderByName = this.ownerService.getAllOwnersOrderByName();
-
-        //modelAndView.addObject("allOwnersOrderByName", allOwnersOrderByName);
 
         return modelAndView;
     }

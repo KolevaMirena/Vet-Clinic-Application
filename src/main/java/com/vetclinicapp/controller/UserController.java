@@ -1,18 +1,27 @@
 package com.vetclinicapp.controller;
 
 
+import com.vetclinicapp.model.dto.RoleAddBindingModel;
 import com.vetclinicapp.model.dto.UserRegisterBindingModel;
+import com.vetclinicapp.model.entity.Role;
+import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.service.UserServiceModel;
+import com.vetclinicapp.model.view.UserRoleViewModel;
+import com.vetclinicapp.model.view.UserViewModel;
+import com.vetclinicapp.service.RoleService;
 import com.vetclinicapp.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -20,10 +29,12 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final RoleService roleService;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, RoleService roleService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.roleService = roleService;
     }
 
     @GetMapping("/login")
@@ -32,12 +43,10 @@ public class UserController {
     }
 
 
-
     @GetMapping("/register")
     public ModelAndView register(@ModelAttribute("userRegisterBindingModel") UserRegisterBindingModel userRegisterBindingModel){
         return new ModelAndView("register");
     }
-
 
 
     @PostMapping("/register")
@@ -58,11 +67,47 @@ public class UserController {
             return modelAndView;
         }
 
-
         return new ModelAndView("redirect:/login");
-
 
     }
 
+    @GetMapping("/users/all")
+    public ModelAndView allUsers(){
+
+        ModelAndView modelAndView = new ModelAndView("users-all");
+
+        List<UserViewModel> allUsersOrderByName = this.userService.getAllUsersOrderByName();
+        List<Role> allRoles = this.roleService.getAllRoles();
+
+
+        modelAndView.addObject("allRoles", allRoles);
+        modelAndView.addObject("allUsersOrderByName", allUsersOrderByName);
+
+        return modelAndView;
+    }
+
+
+    @GetMapping("/user/roles/{id}")
+    public ModelAndView userRoles(@PathVariable("id") Long id){
+
+        ModelAndView modelAndView = new ModelAndView("user-roles");
+
+        User currentUser = this.userService.findUserById(id);
+        List<Role> allRoles = this.roleService.getAllRoles();
+
+        modelAndView.addObject("allRoles", allRoles);
+        modelAndView.addObject("currentUser", currentUser);
+
+        return modelAndView;
+    }
+
+
+    @PostMapping("/user/{userId}/addRole/{roleId}")
+    public ModelAndView userAddRole(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId){
+
+        this.userService.addUserRole(userId, roleId);
+
+        return new ModelAndView("users-all");
+    }
 
 }

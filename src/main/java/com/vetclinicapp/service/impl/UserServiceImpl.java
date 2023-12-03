@@ -4,12 +4,17 @@ import com.vetclinicapp.model.entity.Role;
 import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.enums.UserRoleEnum;
 import com.vetclinicapp.model.service.UserServiceModel;
+import com.vetclinicapp.model.view.UserRoleViewModel;
+import com.vetclinicapp.model.view.UserViewModel;
 import com.vetclinicapp.repository.RoleRepository;
 import com.vetclinicapp.repository.UserRepository;
 import com.vetclinicapp.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -37,8 +42,8 @@ public  class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 
-       Role adminRole = this.roleRepository.findRoleByRoleName(UserRoleEnum.ADMIN);
-       Role userRole =this.roleRepository.findRoleByRoleName(UserRoleEnum.USER);
+        Role adminRole = this.roleRepository.findRoleByRoleName(UserRoleEnum.ADMIN);
+        Role userRole =this.roleRepository.findRoleByRoleName(UserRoleEnum.USER);
 
 
         this.userRepository.save(user);
@@ -47,6 +52,37 @@ public  class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public List<UserViewModel> getAllUsersOrderByName() {
 
+     return    this.userRepository.findAllByOrderByUsername()
+                .stream().map(user -> modelMapper.map(user, UserViewModel.class))
+                .collect(Collectors.toList());
+
+    }
+
+
+
+    @Override
+    public List<UserRoleViewModel> getRolesByUserId(Long id) {
+        return null;
+    }
+
+
+    @Override
+    public User findUserById(Long id) {
+        return this.userRepository.findUserById(id);
+    }
+
+    @Override
+    public void addUserRole(Long userId, Long roleId) {
+
+        User currentuser = this.userRepository.findUserById(userId);
+        Role currentRole = this.roleRepository.findRoleById(roleId);
+
+        currentuser.getRoles().add(currentRole);
+        this.userRepository.save(currentuser);
+
+    }
 
 }

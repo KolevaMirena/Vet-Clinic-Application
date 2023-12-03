@@ -129,9 +129,7 @@ public class PetController {
 
         modelAndView.addObject("petManipulations", petManipulations);
 
-
         return modelAndView;
-
     }
 
     @GetMapping ("/pet/products/{name}")

@@ -5,7 +5,7 @@
 <body>
 <header th:replace="fragments/commons::nav"></header>
 <main>
-    <div  class="container bg-blur rounded mt-5 det">
+    <div  th:object="${allUsersOrderByName}" class="container bg-blur rounded mt-5 det">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
             <tr>
@@ -15,17 +15,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td ></td>
-                <td><a style="display:block;"></a></td>
+            <tr th:each="user : ${allUsersOrderByName}">
+                <td th:text="${user.getUsername()}"></td>
+
+                <td><a th:href="@{/user/roles/{id}(id = ${user.getId()})}" style="display:block;">Manage roles</a></td>
                 <td>
-                    <form>
+                    <form th:method="POST" th:action="@{/user/remove/{id}(id = ${user.id})}">
                         <button type="submit" name="submit" value="value" class="link-button">Remove User</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
+
     </div>
 </main>
 <footer th:replace="fragments/commons::footer"></footer>

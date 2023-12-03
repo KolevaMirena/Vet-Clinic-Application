@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Manage user's roles</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+
+    <form class="mx-auto w-25 bg-blur rounded"
+          th:object="${currentUser}">
+
+        <div class="form-group">
+            <div class="label-holder textCol d-flex justify-content-center">
+                <h3 th:text="|Username: ${currentUser.getUsername()}|"></h3>
+            </div>
+
+            <div th:unless="${currentUser.getRoles().size()==0}" class="label-holder textCol d-flex justify-content-center">
+                <label>User's Roles: </label><br>
+                <span th:each="role,iterStat : ${currentUser.getRoles()}"
+                      th:text="${role.getRoleName()} + ${!iterStat.last ? ', ' : ''}"></span>
+            </div>
+
+            <div  th:if="${currentUser.getRoles().size()==0}" class="label-holder textCol d-flex justify-content-center">
+                <label>No roles assigned to this user!</label><br>
+            </div>
+            <table  class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Role</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="role : ${allRoles}">
+
+                    <td th:text="${role.getRoleName()}"></td>
+
+
+                    <td th:method="POST" sec:authorize="hasRole('ADMIN')">
+                        <div >
+                            <button th:action="@{/user/{userId}/addRole/{roleId}(userId = ${currentUser.id}, roleId = ${role.id})}"
+                                    type="submit"  class="link-button">Add Role</button>
+                        </div>
+                    </td>
+
+                     <td sec:authorize="hasRole('ADMIN')">
+                         <div th:href="@{/user/{userId}(userId = ${currentUser.getId()})/removeRole/{roleId}(roleId = ${role.id})}">
+                             <button type="submit" class="link-button">Remove Role</button>
+                         </div>
+                     </td>
+                 </tr>
+                 </tbody>
+             </table>
+         </div>
+     </form>
+ </main>
+ <footer th:replace="fragments/commons::footer"></footer>
+ </body>
+ </html>
