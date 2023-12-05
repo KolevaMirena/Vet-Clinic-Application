@@ -15,7 +15,7 @@
     <form class="mx-auto w-25 bg-blur rounded"
           th:object="${currentUser}">
 
-        <div class="form-group">
+        <form class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
                 <h3 th:text="|Username: ${currentUser.getUsername()}|"></h3>
             </div>
@@ -43,18 +43,20 @@
                     <td th:text="${role.getRoleName()}"></td>
 
 
-                    <td th:method="POST" sec:authorize="hasRole('ADMIN')">
-                        <div >
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <form th:method="POST">
                             <button th:action="@{/user/{userId}/addRole/{roleId}(userId = ${currentUser.id}, roleId = ${role.id})}"
                                     type="submit"  class="link-button">Add Role</button>
-                        </div>
+                        </form>
                     </td>
 
-                     <td sec:authorize="hasRole('ADMIN')">
-                         <div th:href="@{/user/{userId}(userId = ${currentUser.getId()})/removeRole/{roleId}(roleId = ${role.id})}">
-                             <button type="submit" class="link-button">Remove Role</button>
-                         </div>
-                     </td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <form th:method="POST">
+                            <button th:action="@{/user/{userId}(userId = ${currentUser.getId()})/removeRole/{roleId}(roleId = ${role.id})}"
+                                    type="submit"  class="link-button">Remove Role</button>
+                        </form>
+                    </td>
+
                  </tr>
                  </tbody>
              </table>

@@ -1,6 +1,7 @@
 package com.vetclinicapp.service;
 
 
+import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.service.UserServiceModel;
 import com.vetclinicapp.model.view.UserRoleViewModel;
@@ -17,7 +18,7 @@ public interface UserService {
 
     User findUserById(Long id);
 
-    void addUserRole(Long userId, Long roleId);
+    boolean addUserRole(UserRoleBindingModel userRoleBindingModel);
 
 
 }

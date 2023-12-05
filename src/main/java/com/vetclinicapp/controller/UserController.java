@@ -3,6 +3,7 @@ package com.vetclinicapp.controller;
 
 import com.vetclinicapp.model.dto.RoleAddBindingModel;
 import com.vetclinicapp.model.dto.UserRegisterBindingModel;
+import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.Role;
 import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.service.UserServiceModel;
@@ -87,27 +88,71 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/roles/{id}")
-    public ModelAndView userRoles(@PathVariable("id") Long id){
+  // @GetMapping("/user/roles/{id}")
+  // public ModelAndView userRoles(@PathVariable("id") Long id, @ModelAttribute ("userRegisterBindingModel") UserRoleBindingModel userRoleBindingModel){
 
-        ModelAndView modelAndView = new ModelAndView("user-roles");
+  //     ModelAndView modelAndView = new ModelAndView("user-roles");
 
-        User currentUser = this.userService.findUserById(id);
-        List<Role> allRoles = this.roleService.getAllRoles();
+  //     User currentUser = this.userService.findUserById(id);
+  //     List<Role> allRoles = this.roleService.getAllRoles();
 
-        modelAndView.addObject("allRoles", allRoles);
-        modelAndView.addObject("currentUser", currentUser);
+  //     modelAndView.addObject("allRoles", allRoles);
+  //     modelAndView.addObject("currentUser", currentUser);
 
-        return modelAndView;
+  //     return modelAndView;
+  // }
+
+
+//   @GetMapping("/user/{userId}/addRole/{roleId}")
+//   public ModelAndView userAddRole(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId, UserRoleBindingModel userRoleBindingModel,
+//                                   BindingResult bindingResult){
+
+//       this.userService.addUserRole(userId, roleId);
+
+//       return new ModelAndView("users-all");
+//   }
+
+    @GetMapping("/user/addRole")
+  public ModelAndView userAddRole(@ModelAttribute("userRoleBindingModel") UserRoleBindingModel userRoleBindingModel){
+
+       ModelAndView modelAndView = new ModelAndView("role-add");
+       List<UserViewModel> allUsersOrderByName = this.userService.getAllUsersOrderByName();
+       List<Role> allRoles = this.roleService.getAllRoles();
+
+       modelAndView.addObject("allUsersOrderByName", allUsersOrderByName);
+       modelAndView.addObject("allRoles", allRoles);
+
+
+       return modelAndView;
+  }
+
+    @PostMapping("/user/addRole")
+    public ModelAndView userAddRole( @ModelAttribute("userRoleBindingModel") @Valid UserRoleBindingModel userRoleBindingModel,
+                                     BindingResult bindingResult){
+
+
+        if(bindingResult.hasErrors()){
+            return new ModelAndView("role-add");
+
+        }
+
+        boolean successfulAddedRole = userService.addUserRole(userRoleBindingModel);
+
+        if(!successfulAddedRole){
+            ModelAndView modelAndView = new ModelAndView("role-add");
+            modelAndView.addObject("hasAddRoleError", true);
+            return modelAndView;
+        }
+
+        return new ModelAndView("redirect:/home");
     }
 
+    @GetMapping("/user/removeRole")
+    public ModelAndView userRemoveRole( @ModelAttribute("userRoleBindingModel") UserRoleBindingModel userRoleBindingModel){
 
-    @PostMapping("/user/{userId}/addRole/{roleId}")
-    public ModelAndView userAddRole(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId){
 
-        this.userService.addUserRole(userId, roleId);
-
-        return new ModelAndView("users-all");
+        return new ModelAndView("role-remove");
     }
+
 
 }

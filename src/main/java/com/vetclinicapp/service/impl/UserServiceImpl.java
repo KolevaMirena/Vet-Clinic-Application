@@ -1,5 +1,6 @@
 package com.vetclinicapp.service.impl;
 
+import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.Role;
 import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.enums.UserRoleEnum;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -41,9 +43,6 @@ public  class UserServiceImpl implements UserService {
         User user = modelMapper.map(userServiceModel,User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-
-        Role adminRole = this.roleRepository.findRoleByRoleName(UserRoleEnum.ADMIN);
-        Role userRole =this.roleRepository.findRoleByRoleName(UserRoleEnum.USER);
 
 
         this.userRepository.save(user);
@@ -75,13 +74,25 @@ public  class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUserRole(Long userId, Long roleId) {
+    public boolean addUserRole(UserRoleBindingModel userRoleBindingModel) {
 
-        User currentuser = this.userRepository.findUserById(userId);
-        Role currentRole = this.roleRepository.findRoleById(roleId);
+        User currentUser = this.userRepository.findByUsername(userRoleBindingModel.getUsername()).get();
+        Role currentRole = this.roleRepository.findRoleByRoleName(userRoleBindingModel.getRole());
 
-        currentuser.getRoles().add(currentRole);
-        this.userRepository.save(currentuser);
+        if(currentUser == null || currentRole == null){
+            return false;
+        }
+
+        List<Role> currentUserRoles = currentUser.getRoles();
+
+        currentUserRoles.add(currentRole);
+        currentUser.setRoles(currentUserRoles);
+
+        this.userRepository.save(currentUser);
+
+
+
+        return true;
 
     }
 

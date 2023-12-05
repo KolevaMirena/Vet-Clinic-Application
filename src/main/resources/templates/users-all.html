@@ -17,8 +17,19 @@
             <tbody>
             <tr th:each="user : ${allUsersOrderByName}">
                 <td th:text="${user.getUsername()}"></td>
-
-                <td><a th:href="@{/user/roles/{id}(id = ${user.getId()})}" style="display:block;">Manage roles</a></td>
+                  <td>
+                    <span th:each="role,iterStat : ${user.getUserRoles()}"
+                             th:text="${role.getRoleName()} + ${!iterStat.last ? ', ' : ''}"></span>
+                     </td>
+                <!--  <td>
+                    <select class="browser-default custom-select" th:object="${allRoles}">
+                        <option value="0">select option</option>
+                        <div th:each="role : ${allRoles}">
+                            <option  th:value="${role.getId()}" th:text="${role.getRoleName()}"></option>
+                        </div>
+                    </select>
+                </td>
+                <td><a th:href="@{/user/roles/{id}(id = ${user.getId()})}" style="display:block;">Manage roles</a></td>--->
                 <td>
                     <form th:method="POST" th:action="@{/user/remove/{id}(id = ${user.id})}">
                         <button type="submit" name="submit" value="value" class="link-button">Remove User</button>
@@ -27,6 +38,13 @@
             </tr>
             </tbody>
         </table>
+
+        <form>
+            <a th:href="@{/user/addRole}" type="submit" class="link-button wit">Add Role</a>
+        </form>
+        <form >
+            <a th:href="@{/user/removeRole}" type="submit"  class="link-button wit">Remove Role</a>
+        </form>
 
     </div>
 </main>
