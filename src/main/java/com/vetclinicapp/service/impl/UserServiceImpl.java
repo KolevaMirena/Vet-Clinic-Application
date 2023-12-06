@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -83,17 +84,43 @@ public  class UserServiceImpl implements UserService {
             return false;
         }
 
-        List<Role> currentUserRoles = currentUser.getRoles();
+        Set<Role> currentUserRoles = currentUser.getRoles();
 
+        
         currentUserRoles.add(currentRole);
         currentUser.setRoles(currentUserRoles);
 
         this.userRepository.save(currentUser);
 
+        return true;
+
+    }
+
+    @Override
+    public boolean removeUserRole(UserRoleBindingModel userRoleBindingModel) {
+
+        User currentUser = this.userRepository.findByUsername(userRoleBindingModel.getUsername()).get();
+        Role currentRole = this.roleRepository.findRoleByRoleName(userRoleBindingModel.getRole());
+
+        Long roleId = currentUser.getId();
+
+        Role roleToRemove = this.roleRepository.findRoleById(roleId);
+
+
+
+        if(currentUser == null || currentRole == null){
+            return false;
+        }
+
+
+        Set<Role> userRoles = currentUser.getRoles();
+        userRoles.remove(currentRole);
+
+        currentUser.setRoles(userRoles);
+        this.userRepository.save(currentUser);
 
 
         return true;
-
     }
 
 }

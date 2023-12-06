@@ -150,9 +150,31 @@ public class UserController {
     @GetMapping("/user/removeRole")
     public ModelAndView userRemoveRole( @ModelAttribute("userRoleBindingModel") UserRoleBindingModel userRoleBindingModel){
 
+        ModelAndView modelAndView = new ModelAndView("role-remove");
+        List<UserViewModel> allUsersOrderByName = this.userService.getAllUsersOrderByName();
+        List<Role> allRoles = this.roleService.getAllRoles();
 
-        return new ModelAndView("role-remove");
+        modelAndView.addObject("allUsersOrderByName", allUsersOrderByName);
+        modelAndView.addObject("allRoles", allRoles);
+
+        return modelAndView;
     }
 
+    @PostMapping("/user/removeRole")
+    public ModelAndView userRemoveRole( @ModelAttribute("userRoleBindingModel") @Valid UserRoleBindingModel userRoleBindingModel,
+                                     BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ModelAndView("role-remove");
+
+        }
+        boolean successfulRemovedRole = userService.removeUserRole(userRoleBindingModel);
+
+        if(!successfulRemovedRole){
+            ModelAndView modelAndView = new ModelAndView("role-remove");
+            modelAndView.addObject("hasRemoveRoleError", true);
+            return modelAndView;
+        }
+        return new ModelAndView("redirect:/home");
+    }
 
 }

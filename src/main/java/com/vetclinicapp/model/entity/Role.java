@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -16,7 +17,7 @@ public class Role extends BaseEntity{
 
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private Set<User> users;
 
 
     public Role() {
@@ -31,11 +32,11 @@ public class Role extends BaseEntity{
         this.roleName = roleName;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 }
