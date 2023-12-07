@@ -21,6 +21,6 @@ public interface UserService {
     boolean addUserRole(UserRoleBindingModel userRoleBindingModel);
 
 
-    boolean removeUserRole(UserRoleBindingModel userRoleBindingModel);
+
 
 }

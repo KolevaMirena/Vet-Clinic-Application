@@ -86,7 +86,7 @@ public  class UserServiceImpl implements UserService {
 
         Set<Role> currentUserRoles = currentUser.getRoles();
 
-        
+        currentUserRoles.clear();
         currentUserRoles.add(currentRole);
         currentUser.setRoles(currentUserRoles);
 
@@ -96,31 +96,5 @@ public  class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public boolean removeUserRole(UserRoleBindingModel userRoleBindingModel) {
-
-        User currentUser = this.userRepository.findByUsername(userRoleBindingModel.getUsername()).get();
-        Role currentRole = this.roleRepository.findRoleByRoleName(userRoleBindingModel.getRole());
-
-        Long roleId = currentUser.getId();
-
-        Role roleToRemove = this.roleRepository.findRoleById(roleId);
-
-
-
-        if(currentUser == null || currentRole == null){
-            return false;
-        }
-
-
-        Set<Role> userRoles = currentUser.getRoles();
-        userRoles.remove(currentRole);
-
-        currentUser.setRoles(userRoles);
-        this.userRepository.save(currentUser);
-
-
-        return true;
-    }
 
 }
