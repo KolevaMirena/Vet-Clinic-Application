@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head"></head>
 <body>
 <header th:replace="fragments/commons::nav"></header>
@@ -21,16 +22,8 @@
                     <span th:each="role,iterStat : ${user.getUserRoles()}"
                              th:text="${role.getRoleName()} + ${!iterStat.last ? ', ' : ''}"></span>
                      </td>
-                <!--  <td>
-                    <select class="browser-default custom-select" th:object="${allRoles}">
-                        <option value="0">select option</option>
-                        <div th:each="role : ${allRoles}">
-                            <option  th:value="${role.getId()}" th:text="${role.getRoleName()}"></option>
-                        </div>
-                    </select>
-                </td>
-                <td><a th:href="@{/user/roles/{id}(id = ${user.getId()})}" style="display:block;">Manage roles</a></td>--->
-                <td>
+
+                <td sec:authorize="hasRole('ADMIN')">
                     <form th:method="POST" th:action="@{/user/remove/{id}(id = ${user.id})}">
                         <button type="submit" name="submit" value="value" class="link-button">Remove User</button>
                     </form>

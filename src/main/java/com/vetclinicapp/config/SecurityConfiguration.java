@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/pets/all", "/vets/all", "/owners/all", "/products/available").permitAll()
                             .requestMatchers("/users/all").hasRole(UserRoleEnum.ADMIN.name())
                             .requestMatchers("/user/roles/{id}").hasRole(UserRoleEnum.ADMIN.name())
-                            .requestMatchers("/user/{userId}/addRole/{roleId}").hasRole(UserRoleEnum.ADMIN.name())
+                            //.requestMatchers("/user/{userId}/addRole/{roleId}").hasRole(UserRoleEnum.ADMIN.name())
                             .anyRequest().authenticated();
 
                 }

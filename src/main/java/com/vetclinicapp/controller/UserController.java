@@ -44,6 +44,20 @@ public class UserController {
     }
 
 
+   @PostMapping("/login-error")
+   public ModelAndView loginOnFailure(){
+
+        ModelAndView modelAndView = new ModelAndView("login");
+
+        modelAndView.addObject("bad_credentials", true);
+
+       return modelAndView;
+
+
+   }
+
+
+
     @GetMapping("/register")
     public ModelAndView register(@ModelAttribute("userRegisterBindingModel") UserRegisterBindingModel userRegisterBindingModel){
         return new ModelAndView("register");
@@ -88,30 +102,6 @@ public class UserController {
     }
 
 
-  // @GetMapping("/user/roles/{id}")
-  // public ModelAndView userRoles(@PathVariable("id") Long id, @ModelAttribute ("userRegisterBindingModel") UserRoleBindingModel userRoleBindingModel){
-
-  //     ModelAndView modelAndView = new ModelAndView("user-roles");
-
-  //     User currentUser = this.userService.findUserById(id);
-  //     List<Role> allRoles = this.roleService.getAllRoles();
-
-  //     modelAndView.addObject("allRoles", allRoles);
-  //     modelAndView.addObject("currentUser", currentUser);
-
-  //     return modelAndView;
-  // }
-
-
-//   @GetMapping("/user/{userId}/addRole/{roleId}")
-//   public ModelAndView userAddRole(@PathVariable("userId") Long userId, @PathVariable("roleId") Long roleId, UserRoleBindingModel userRoleBindingModel,
-//                                   BindingResult bindingResult){
-
-//       this.userService.addUserRole(userId, roleId);
-
-//       return new ModelAndView("users-all");
-//   }
-
     @GetMapping("/user/addRole")
   public ModelAndView userAddRole(@ModelAttribute("userRoleBindingModel") UserRoleBindingModel userRoleBindingModel){
 
@@ -147,6 +137,15 @@ public class UserController {
         return new ModelAndView("redirect:/home");
     }
 
+
+    @PostMapping ("/user/remove/{id}")
+    public ModelAndView removePet(@PathVariable("id") Long id){
+
+        this.userService.remove(id);
+
+        return new ModelAndView("redirect:/home");
+
+    }
 
 
 

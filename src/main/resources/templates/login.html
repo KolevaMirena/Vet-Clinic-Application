@@ -8,13 +8,13 @@
 <main>
     <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Login</span></h1>
     <hr class="hr-3 w-25 bg-white"/>
-    <form class="mx-auto w-25 bg-blur"  th:method="POST" th:action="@{/login}"> <!--
+    <form class="mx-auto w-25 bg-blur"  th:method="POST" th:action="@{/login}" >
 
-          th:object="${userLoginBindingModel}"-->
 
-        <!--<div th:if="${hasLoginError}" th:text="'Incorrect username or password!'" class="text-danger"></div>-->
+<!--  th:object="${userLoginBindingModel}"
+       <div th:if="${hasLoginError}" th:text="'Incorrect username or password!'" class="text-danger"></div>
 
-        <!--<div class="text-danger"> </div> th:if ="${#fields.hasErrors('username')}"
+        <div class="text-danger"> </div> th:if ="${#fields.hasErrors('username')}"
              th:errors="*{username}"-->
 
 
@@ -44,6 +44,10 @@
             <input type="checkbox" class="form-control checkboxes" id="rememberme" name = "rememberme"/>
         </div>
 
+
+        <p th:if="${bad_credentials}" class="errors alert alert-danger">
+            Invalid username or password.
+        </p>
 
         <div class="button-holder d-flex justify-content-center">
              <button type="submit" class="btn btn-warning  mb-3">Login</button>
