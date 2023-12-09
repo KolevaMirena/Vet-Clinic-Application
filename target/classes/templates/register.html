@@ -12,15 +12,13 @@
           th:action="@{/register}"
           th:object="${userRegisterBindingModel}">
 
+        <div th:if="${hasRegistrationError}" class="text-danger">Registration error has occurred!</div>
 
 
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
                 <label for="username" class="h4 mb-2 text-white">Username</label>
             </div>
-
-            <div th:if="${hasRegistrationError}" class="text-danger">Registration error has occurred!</div>
-
             <input type="text" class="form-control" id="username"  th:field="*{username}"
                    th:errorclass="bg-danger"/>
             <small th:if="${#fields.hasErrors('username')}"

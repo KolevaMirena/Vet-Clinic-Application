@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">User's details</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+    <form class="mx-auto w-25 bg-blur darker"  th:method="POST" th:action="@{/users/details}" th:object="${userChangeUsernameBindingModel}" >
+
+
+        <div th:if="${hasChangeUsernameError}" class="text-danger">Change username error has occurred!</div>
+
+        <div class="form-group">
+            <div class="label-holder text-white d-flex justify-content-center crnUser">
+                <label class="h3 mb-2">Current username</label>
+            </div>
+            <div class="crnUser" th:text="${userName}"></div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="label-holder text-white d-flex justify-content-center">
+                <label for="newName" class="h3 mb-2">New username</label>
+            </div>
+            <input type="text" class="form-control" id="newName"  th:field="*{newName}"
+                   th:errorclass="bg-danger"/>
+            <small th:if="${#fields.hasErrors('newName')}"
+                   th:errors="*{newName}" class="text-danger">New Username error message</small>
+        </div>
+
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-warning  mb-3">Change Username</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

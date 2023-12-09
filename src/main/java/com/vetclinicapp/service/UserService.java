@@ -23,4 +23,6 @@ public interface UserService {
 
     void remove(Long id);
 
+    boolean changeUsername(String newName, String name);
+
 }

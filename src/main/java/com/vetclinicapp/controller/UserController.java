@@ -1,17 +1,18 @@
 package com.vetclinicapp.controller;
 
-
-import com.vetclinicapp.model.dto.RoleAddBindingModel;
+import com.vetclinicapp.model.dto.UserChangeUsernameBindingModel;
 import com.vetclinicapp.model.dto.UserRegisterBindingModel;
 import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.Role;
-import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.service.UserServiceModel;
-import com.vetclinicapp.model.view.UserRoleViewModel;
 import com.vetclinicapp.model.view.UserViewModel;
 import com.vetclinicapp.service.RoleService;
 import com.vetclinicapp.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -44,6 +47,41 @@ public class UserController {
     }
 
 
+    @GetMapping("/users/details")
+    public ModelAndView userDetails(@ModelAttribute("userChangeUsernameBindingModel") UserChangeUsernameBindingModel userChangeUsernameBindingModel, Principal principal){
+
+        ModelAndView modelAndView = new ModelAndView("user-details");
+        String userName = principal.getName();
+
+        modelAndView.addObject("userName", userName);
+        return  modelAndView;
+
+    }
+
+    @PostMapping ("/users/details")
+    public ModelAndView userDetails(@ModelAttribute("userRegisterBindingModel") @Valid  UserChangeUsernameBindingModel userChangeUsernameBindingModel,
+                                    BindingResult bindingResult, Principal principal){
+
+        if(bindingResult.hasErrors()){
+            return new ModelAndView("user-details");
+
+        }
+
+        boolean successfulChangeUsername = this.userService.changeUsername(userChangeUsernameBindingModel.getNewName(), principal.getName());
+
+        if(!successfulChangeUsername){
+            ModelAndView modelAndView = new ModelAndView("user-details");
+            modelAndView.addObject("hasChangeUsernameError", true);
+            return modelAndView;
+        }
+
+
+        return  new ModelAndView("redirect:/login");
+
+
+    }
+
+
    @PostMapping("/login-error")
    public ModelAndView loginOnFailure(){
 
@@ -53,10 +91,7 @@ public class UserController {
 
        return modelAndView;
 
-
    }
-
-
 
     @GetMapping("/register")
     public ModelAndView register(@ModelAttribute("userRegisterBindingModel") UserRegisterBindingModel userRegisterBindingModel){
@@ -117,7 +152,7 @@ public class UserController {
   }
 
     @PostMapping("/user/addRole")
-    public ModelAndView userAddRole( @ModelAttribute("userRoleBindingModel") @Valid UserRoleBindingModel userRoleBindingModel,
+    public ModelAndView userAddRole(@ModelAttribute("userRoleBindingModel") @Valid UserRoleBindingModel userRoleBindingModel,
                                      BindingResult bindingResult){
 
 

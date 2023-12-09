@@ -99,9 +99,27 @@ public  class UserServiceImpl implements UserService {
     @Override
     public void remove(Long id) {
 
+        this.userRepository.deleteById(id);
 
 
+    }
 
+    @Override
+    public boolean changeUsername(String newName, String name) {
+
+        Optional<User> byUsername = this.userRepository.findByUsername(newName);
+
+        if(byUsername.isPresent()){
+            return false;
+        }
+
+        User currentUser = this.userRepository.findByUsername(name).get();
+
+        currentUser.setUsername(newName);
+
+        this.userRepository.save(currentUser);
+
+        return true;
     }
 
 
