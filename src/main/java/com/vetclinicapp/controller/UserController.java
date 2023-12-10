@@ -47,6 +47,18 @@ public class UserController {
     }
 
 
+    @PostMapping("/login-error")
+    public ModelAndView loginOnFailure(){
+
+        ModelAndView modelAndView = new ModelAndView("login");
+
+        modelAndView.addObject("bad_credentials", true);
+
+        return modelAndView;
+
+    }
+
+
     @GetMapping("/users/details")
     public ModelAndView userDetails(@ModelAttribute("userChangeUsernameBindingModel") UserChangeUsernameBindingModel userChangeUsernameBindingModel, Principal principal){
 
@@ -82,16 +94,6 @@ public class UserController {
     }
 
 
-   @PostMapping("/login-error")
-   public ModelAndView loginOnFailure(){
-
-        ModelAndView modelAndView = new ModelAndView("login");
-
-        modelAndView.addObject("bad_credentials", true);
-
-       return modelAndView;
-
-   }
 
     @GetMapping("/register")
     public ModelAndView register(@ModelAttribute("userRegisterBindingModel") UserRegisterBindingModel userRegisterBindingModel){

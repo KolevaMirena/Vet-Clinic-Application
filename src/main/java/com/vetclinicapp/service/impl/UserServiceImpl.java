@@ -33,7 +33,6 @@ public  class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,  ModelMapper modelMapper, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-
         this.modelMapper = modelMapper;
         this.roleRepository = roleRepository;
     }
@@ -44,10 +43,7 @@ public  class UserServiceImpl implements UserService {
         User user = modelMapper.map(userServiceModel,User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-
-
-        this.userRepository.save(user);
-
+       this.userRepository.save(user);
 
         return true;
     }

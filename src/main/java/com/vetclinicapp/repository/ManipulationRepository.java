@@ -14,6 +14,7 @@ public interface ManipulationRepository extends JpaRepository<Manipulation, Long
 
     List<Manipulation>  findAll();
 
+
     Manipulation findByName(String name);
 
 

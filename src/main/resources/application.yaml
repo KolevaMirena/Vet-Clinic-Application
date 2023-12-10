@@ -41,4 +41,7 @@ logging:
       nodeValue: WARN
     blog: WARN
 server:
+  error:
+    include-message: always
+    include-stacktrace: always
   port: 8080
