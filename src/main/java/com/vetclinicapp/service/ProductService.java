@@ -16,4 +16,7 @@ public interface ProductService {
     boolean sellProduct(ProductSellBindingModel productSellBindingModel);
 
     List<ProductViewModel> getAllProductsOrderByType();
+
+    void cleanUpUnavailableProducts();
+
 }

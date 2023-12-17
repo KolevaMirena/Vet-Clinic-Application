@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ public class User extends BaseEntity{
 
     @Column(nullable = false)
     private String password;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -61,4 +63,5 @@ public class User extends BaseEntity{
         this.roles.remove(role);
 
   }
+
 }

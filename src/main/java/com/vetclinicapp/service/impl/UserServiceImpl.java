@@ -1,5 +1,6 @@
 package com.vetclinicapp.service.impl;
 
+import com.vetclinicapp.model.dto.UserLoginBindingModel;
 import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.Role;
 import com.vetclinicapp.model.entity.User;
@@ -11,9 +12,12 @@ import com.vetclinicapp.repository.RoleRepository;
 import com.vetclinicapp.repository.UserRepository;
 import com.vetclinicapp.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -117,6 +121,7 @@ public  class UserServiceImpl implements UserService {
 
         return true;
     }
+
 
 
 }

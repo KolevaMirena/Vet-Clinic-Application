@@ -1,6 +1,7 @@
 package com.vetclinicapp.controller;
 
 import com.vetclinicapp.model.dto.UserChangeUsernameBindingModel;
+import com.vetclinicapp.model.dto.UserLoginBindingModel;
 import com.vetclinicapp.model.dto.UserRegisterBindingModel;
 import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.Role;
@@ -42,9 +43,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public ModelAndView login(){
+    public ModelAndView login(@ModelAttribute("userLoginBindingModel") UserLoginBindingModel userLoginBindingModel){
         return new ModelAndView("login");
     }
+
 
 
     @PostMapping("/login-error")

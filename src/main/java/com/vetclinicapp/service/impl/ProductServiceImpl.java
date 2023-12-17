@@ -97,4 +97,11 @@ public class ProductServiceImpl implements ProductService {
              ).collect(Collectors.toList());
 
     }
+
+    @Override
+    public void cleanUpUnavailableProducts() {
+
+        this.productRepository.cleanUpUnavailableProducts();
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.vetclinicapp.service;
 
 
+import com.vetclinicapp.model.dto.UserLoginBindingModel;
 import com.vetclinicapp.model.dto.UserRoleBindingModel;
 import com.vetclinicapp.model.entity.User;
 import com.vetclinicapp.model.service.UserServiceModel;
@@ -20,9 +21,9 @@ public interface UserService {
 
     boolean addUserRole(UserRoleBindingModel userRoleBindingModel);
 
-
     void remove(Long id);
 
     boolean changeUsername(String newName, String name);
+
 
 }
