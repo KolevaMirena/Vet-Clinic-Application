@@ -14,6 +14,6 @@ public interface PetManipulationRepository extends JpaRepository<PetManipulation
     List<PetManipulation> getPetManipulationsByPetNameOrderByManipulationDateDesc(String name);
 
 
-    PetManipulation findByPetName(String name);
+    List<PetManipulation> findAllByPetName(String name);
 
 }

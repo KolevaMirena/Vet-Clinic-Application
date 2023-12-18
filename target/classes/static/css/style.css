@@ -213,4 +213,16 @@ footer {
     color: forestgreen;
 }
 
+th{
+    position: sticky;
+    top: 0px;
+
+}
+
+.table{
+    display: block;
+    max-height:300px;
+    overflow-y: scroll;
+    max-width: 1000px;
+}
 

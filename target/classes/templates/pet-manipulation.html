@@ -16,32 +16,32 @@
             <div class="text-white label-holder d-flex justify-content-center">
                 <label for="petName" class="h4 mb-2">Select Pet</label>
             </div>
-            <select class="form-control" id="petName"  th:field="*{petName}"
-                    th:errorclass="bg-danger">
+            <select class="form-control" id="petName">
                 <option value="0">select option</option>
                 <option th:each="pet : ${allPets}" th:value="${pet.getName()}" th:text="${pet.getName()}"></option>
             </select>
+            <small  th:if="${#fields.hasErrors('petName')}"
+                    th:errors="*{petName}" class="text-danger">Pet name error message</small>
         </div>
 
 
         <div class="form-group">
             <div class="text-white label-holder d-flex justify-content-center">
-                <label for="vetName" class="h4 mb-2">Select Manipulation</label>
+                <label for="manipulationName" class="h4 mb-2">Select Manipulation</label>
             </div>
-            <select class="form-control" id="vetName"  th:field="*{manipulationName}"
-                    th:errorclass="bg-danger" >
+            <select class="form-control" id="manipulationName" >
                 <option value="0">select option</option>
                 <option th:each="manipulation : ${manipulationList}" th:value="${manipulation.getName()}" th:text="${manipulation.getName()}"></option>
             </select>
+            <small  th:if="${#fields.hasErrors('manipulationName')}"
+                    th:errors="*{manipulationName}" class="text-danger">Pet name error message</small>
         </div>
 
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="executionDate" class="h4 mb-2">Execution date</label>
             </div>
-            <input type="date" class="form-control" id="executionDate"
-                   th:field="*{executionDate}"
-                   th:errorclass="bg-danger"></input>
+            <input type="date" class="form-control" id="executionDate"></input>
             <small th:if="${#fields.hasErrors('executionDate')}"
                    th:errors="*{executionDate}"
                    class="text-danger">Execution Date error message</small>

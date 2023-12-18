@@ -16,8 +16,7 @@
             <div class="text-white label-holder d-flex justify-content-center">
                 <label for="petName" class="h4 mb-2">Unassigned Pets</label>
             </div>
-            <select class="form-control" id="petName"  th:field="*{petName}"
-                    th:errorclass="bg-danger">
+            <select class="form-control" id="petName">
                 <option value="0">select option</option>
                 <option th:each="pet : ${unassignedPets}" th:value="${pet.getName()}" th:text="${pet.getName()}"></option>
             </select>
@@ -30,8 +29,7 @@
             <div class="text-white label-holder d-flex justify-content-center">
                 <label for="vetName" class="h4 mb-2">Select Vet</label>
             </div>
-            <select class="form-control" id="vetName"  th:field="*{vetName}"
-                    th:errorclass="bg-danger" >
+            <select class="form-control" id="vetName"   >
                 <option value="0">select option</option>
                 <option th:each="vet : ${allVets}" th:value="${vet.getLastName()}" th:text="|Dr. ${vet.getLastName()}|"></option>
             </select>

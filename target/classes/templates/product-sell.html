@@ -18,11 +18,12 @@
             <div class="text-white label-holder d-flex justify-content-center">
                 <label for="productName" class="h4 mb-2">Select Product</label>
             </div>
-            <select class="form-control" id="productName"  th:field="*{productName}"
-                    th:errorclass="bg-danger" >
+            <select class="form-control" id="productName">
                 <option value="0">select option</option>
                 <option th:each="product : ${productList}" th:value="${product.getName()}" th:text="${product.getName()}"></option>
             </select>
+            <small  th:if="${#fields.hasErrors('productName')}"
+                    th:errors="*{productName}" class="text-danger">Pet name error message</small>
         </div>
 
 
@@ -30,11 +31,12 @@
             <div class="text-white label-holder d-flex justify-content-center">
                 <label for="petName" class="h4 mb-2">Select Pet</label>
             </div>
-            <select class="form-control" id="petName"  th:field="*{petName}"
-                    th:errorclass="bg-danger">
+            <select class="form-control" id="petName">
                 <option value="0">select option</option>
                 <option th:each="pet : ${allPets}" th:value="${pet.getName()}" th:text="${pet.getName()}"></option>
             </select>
+            <small  th:if="${#fields.hasErrors('petName')}"
+                    th:errors="*{petName}" class="text-danger">Pet name error message</small>
         </div>
 
 
@@ -44,8 +46,7 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="quantity" class="h4 mb-2">Quantity</label>
             </div>
-            <input type="text" class="form-control" id="quantity" th:field="*{quantity}"
-                   th:errorclass="bg-danger"></input>
+            <input type="text" class="form-control" id="quantity"></input>
             <small th:if="${#fields.hasErrors('quantity')}"
                    th:errors="*{quantity}"  class="text-danger">Product quantity error message</small>
         </div>

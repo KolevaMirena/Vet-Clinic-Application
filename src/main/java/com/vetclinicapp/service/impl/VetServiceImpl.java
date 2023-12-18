@@ -69,14 +69,16 @@ public class VetServiceImpl implements VetService {
 
     @Override
     public void remove(Long id) {
-        //todo
+
         //make all vet's patients unassigned
 
         List<Pet> allByVetId = this.petRepository.findAllByVetId(id);
 
-        for (Pet pet : allByVetId) {
-            pet.setVet(null);
-            this.petRepository.save(pet);
+        if(!allByVetId.isEmpty()) {
+            for (Pet pet : allByVetId) {
+                pet.setVet(null);
+                this.petRepository.save(pet);
+            }
         }
 
         this.vetRepository.deleteById(id);

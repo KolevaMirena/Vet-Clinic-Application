@@ -24,9 +24,7 @@ public class ManipulationServiceImpl implements ManipulationService {
     public boolean addManipulation(ManipulationServiceModel manipulationServiceModel) {
 
         Manipulation manipulation= modelMapper.map(manipulationServiceModel, Manipulation.class);
-
         this.manipulationRepository.save(manipulation);
-
         return true;
     }
 

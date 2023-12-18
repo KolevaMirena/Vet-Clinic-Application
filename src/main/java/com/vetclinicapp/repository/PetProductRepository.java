@@ -17,5 +17,5 @@ public interface PetProductRepository extends JpaRepository<PetProduct, Long> {
      List<PetProduct> getPetProductsByPetName(String name);
 
 
-     PetProduct findByPetName(String name);
+     List<PetProduct> findByPetName(String name);
 }

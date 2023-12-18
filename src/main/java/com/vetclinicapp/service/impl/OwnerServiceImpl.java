@@ -57,30 +57,41 @@ public class OwnerServiceImpl implements OwnerService {
         //todo
         //find all owners pets
         Owner ownerById = this.ownerRepository.findOwnerById(id);
-        Set<Pet> currentOwnerPets = ownerById.getPets();
+        if (ownerById != null) {
+            Set<Pet> currentOwnerPets = ownerById.getPets();
 
-        //remove pets from:
+            //remove pets from:
             //vets collections
 
-        if(!currentOwnerPets.isEmpty()) {
-            for (Pet currentOwnerPet : currentOwnerPets) {
+            if (!currentOwnerPets.isEmpty()) {
+                for (Pet currentOwnerPet : currentOwnerPets) {
 
-                Vet currentVet = currentOwnerPet.getVet();
-                currentVet.getPets().remove(currentOwnerPet);
-                this.vetRepository.save(currentVet);
+                    Vet currentVet = currentOwnerPet.getVet();
+                    if (currentVet != null) {
+                        currentVet.getPets().remove(currentOwnerPet);
+                        this.vetRepository.save(currentVet);
+                    }
 
-                PetProduct currentPetProduct = this.petProductRepository.findByPetName(currentOwnerPet.getName());
-                this.petProductRepository.delete(currentPetProduct);
 
-                PetManipulation currentPetManipulation = this.petManipulationRepository.findByPetName(currentOwnerPet.getName());
-                this.petManipulationRepository.delete(currentPetManipulation);
+                    List<PetProduct> currentPetProduct = this.petProductRepository.findByPetName(currentOwnerPet.getName());
+                    if (!currentPetProduct.isEmpty()) {
+                        this.petProductRepository.deleteAll(currentPetProduct);
+                    }
 
+
+                    List<PetManipulation> currentPetManipulation = this.petManipulationRepository.findAllByPetName(currentOwnerPet.getName());
+                    if (!currentPetManipulation.isEmpty()) {
+                        this.petManipulationRepository.deleteAll(currentPetManipulation);
+                    }
+
+
+                }
+
+                this.petRepository.deleteAll(currentOwnerPets);
             }
 
-            this.petRepository.deleteAll(currentOwnerPets);
+            //remove owner
+            this.ownerRepository.deleteById(id);
         }
-
-        //remove owner
-        this.ownerRepository.deleteById(id);
     }
 }

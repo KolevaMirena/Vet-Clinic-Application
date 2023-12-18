@@ -34,7 +34,6 @@ public class PetServiceImpl implements PetService {
         this.petRepository = petRepository;
         this.ownerRepository = ownerRepository;
         this.modelMapper = modelMapper;
-
         this.petManipulationRepository = petManipulationRepository1;
         this.petProductRepository = petProductRepository;
         this.vetRepository = vetRepository;
@@ -114,31 +113,43 @@ public class PetServiceImpl implements PetService {
         // remove from petProduct
 
         Pet petById = this.petRepository.findPetById(id);
-        PetProduct currentPetProduct = this.petProductRepository.findByPetName(petById.getName());
-        this.petProductRepository.delete(currentPetProduct);
+        if(petById!=null) {
 
-        //remove from petManipulation
+            List<PetProduct> currentPetProduct = this.petProductRepository.findByPetName(petById.getName());
 
-        PetManipulation currentPetManipulation = this.petManipulationRepository.findByPetName(petById.getName());
-        this.petManipulationRepository.delete(currentPetManipulation);
-
-        //remove from Owner petList
-
-        Owner owner = petById.getOwner();
-        Set<Pet> pets = owner.getPets();
-        pets.remove(petById);
-        this.ownerRepository.save(owner);
-
-        //remove from vet petList
-
-        Vet vet = petById.getVet();
-        List<Pet> vetPets = vet.getPets();
-       vetPets.remove(petById);
-       this.vetRepository.save(vet);
+            if (!currentPetProduct.isEmpty()) {
+                this.petProductRepository.deleteAll(currentPetProduct);
+            }
 
 
-        this.petRepository.deleteById(id);
+            //remove from petManipulation
 
+            List<PetManipulation> currentPetManipulation = this.petManipulationRepository.findAllByPetName(petById.getName());
+            if (!currentPetManipulation.isEmpty()) {
+                this.petManipulationRepository.deleteAll(currentPetManipulation);
+            }
+
+
+            //remove from Owner petList
+
+            Owner owner = petById.getOwner();
+            Set<Pet> pets = owner.getPets();
+            pets.remove(petById);
+            this.ownerRepository.save(owner);
+
+            //remove from vet petList
+
+
+            Vet vet = petById.getVet();
+            if (vet != null) {
+                List<Pet> vetPets = vet.getPets();
+                vetPets.remove(petById);
+                this.vetRepository.save(vet);
+            }
+
+
+            this.petRepository.deleteById(id);
+        }
 
     }
 
