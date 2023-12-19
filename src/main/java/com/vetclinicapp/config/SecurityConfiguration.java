@@ -37,7 +37,8 @@ public class SecurityConfiguration {
 
                     authorizeRequest.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                             .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
-                            .requestMatchers("/pets/all", "/vets/all", "/owners/all", "/products/available").permitAll()
+                            .requestMatchers("/pets/all", "/vets/all", "/owners/all", "/products/available").hasRole(UserRoleEnum.USER.name())
+                            .requestMatchers("/pets/all", "/vets/all", "/owners/all", "/products/available").hasRole(UserRoleEnum.ADMIN.name())
                             .requestMatchers("/users/all").hasRole(UserRoleEnum.ADMIN.name())
                             .requestMatchers("/user/roles/{id}").hasRole(UserRoleEnum.ADMIN.name())
                             //.requestMatchers("/user/{userId}/addRole/{roleId}").hasRole(UserRoleEnum.ADMIN.name())

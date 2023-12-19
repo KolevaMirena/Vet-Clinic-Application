@@ -19,7 +19,7 @@ public class Owner extends BaseEntity {
     private String phone;
 
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Pet> pets;
 
     public Owner() {

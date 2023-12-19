@@ -21,7 +21,7 @@ public class Manipulation extends BaseEntity{
     private ManipulationTypeEnum type;
 
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)

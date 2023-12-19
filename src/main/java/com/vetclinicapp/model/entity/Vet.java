@@ -27,7 +27,7 @@ public class Vet extends BaseEntity{
 
 
 
-    @OneToMany(mappedBy = "vet", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     public Vet() {

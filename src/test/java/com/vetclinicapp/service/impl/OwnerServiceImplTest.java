@@ -39,16 +39,16 @@ public class OwnerServiceImplTest {
     @Test
     public void ownerRegisterTest(){
 
-        //OwnerServiceModel newOwner = new OwnerServiceModel();
-        //newOwner.setName("Mira");
-        //newOwner.setPhone("88888888888");
-//
-        //ownerService.registerOwner(newOwner);
-//
-        //Owner ownerByPhone = ownerRepository.findOwnerByPhone("88888888888");
-//
-        //assertEquals(1, ownerRepository.count());
-        //assertNotNull(ownerByPhone);
+        OwnerServiceModel newOwner = new OwnerServiceModel();
+        newOwner.setName("Mira");
+        newOwner.setPhone("88888888888");
+
+       ownerService.registerOwner(newOwner);
+
+        Owner ownerByPhone = ownerRepository.findOwnerByPhone("88888888888");
+
+        assertEquals(1, ownerRepository.count());
+        assertNotNull(ownerByPhone);
 
     }
 }
